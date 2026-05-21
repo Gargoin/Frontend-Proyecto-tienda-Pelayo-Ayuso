@@ -1,6 +1,6 @@
 function Footer () {
     return (
-         <footer></footer>
+         <footer>Pelayo Ayuso</footer>
     )
 };
 

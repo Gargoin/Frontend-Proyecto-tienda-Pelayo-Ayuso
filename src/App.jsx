@@ -1,7 +1,9 @@
 import Header from "./components/Header";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 
-import './App.css'
+import './App.css';
 
 function App() {
   
@@ -9,12 +11,9 @@ function App() {
   return (
     <>
     <Header/>
-    <nav></nav>
-    <main>
-      <h1>The Doomgeon Project</h1>
-    </main>
+    <Navbar/>
+    <Home/>
     <Footer/>
-
     </>
   )
 }
