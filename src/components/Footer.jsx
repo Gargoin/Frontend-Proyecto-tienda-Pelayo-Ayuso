@@ -1,6 +1,10 @@
 function Footer () {
     return (
-         <footer>Pelayo Ayuso</footer>
+        <footer>
+            <div>
+                <p>Proyecto final - Pelayo Ayuso</p>
+            </div>
+        </footer>
     )
 };
 

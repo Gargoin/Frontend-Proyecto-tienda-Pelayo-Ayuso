@@ -1,6 +1,6 @@
 function Header () {
     return (
-         <header>LOGO</header>
+         <header className="container">LOGO</header>
     )
 };
 
