@@ -16,6 +16,14 @@ Aplicacion web para gestionar un catálogo de productos.
 - JavaScript
 
 
+## Clonar el repositorio
+
+```shell
+git clone <url_repo>
+git switch dev
+```
+
+
 ## Cómo ejecutar el proyecto
 
 ```shell

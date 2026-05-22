@@ -1,6 +1,10 @@
 function Header () {
     return (
-         <header className="container">LOGO</header>
+         <header className="site-header container">
+
+imagen del logo
+
+         </header>
     )
 };
 
