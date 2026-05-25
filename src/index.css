@@ -7,8 +7,8 @@
 body {
     margin: 0;
     font-family: "inter"; 
-    color: rgb(255, 254, 240);
-    background-color: rgb(49, 49, 49);
+    color: #faf8e7;
+    background-color: #282d2f;
 }
 
 .hero {
@@ -18,7 +18,7 @@ body {
 .hero-label {
     display:inline-block;
     margin-bottom: 1rem;
-    color: red;
+    color: #AA4023;
     font-weight: bold;
     
 }
@@ -42,7 +42,7 @@ body {
 
 .button:hover {
     border-radius: 30px;
-    color: white;
+    color: #faf8e7;
 }
 
 .button span {
@@ -71,20 +71,28 @@ body {
 a {
     color: inherit;
     text-decoration: none;
+    transition: color .3s ease-in-out;
 }
 
 a:hover {
-    color: red;
+    color:#AA4023;
 }
 
 img {
-    width: 100%; 
+    max-width: 100%;
+    display: block;
 }
 
 .site-header{
-    border: solid 5px red;
+    border: solid 5px #AA4023;
     height: 150px;
     min-height: 100px;
+}
+
+.site-footer{
+    font-size: 0.7rem;
+    border-top: 2px dashed #AA4023;
+    text-align: right;
 }
 
 .navbar{
@@ -92,65 +100,75 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px dashed red;
+    border-bottom: 2px dashed #AA4023;
 }
 
-.login{
+.login,
+.menu {
     display: flex;
     gap: 1em;
-
 }
 
-.site-footer{
-    font-size: 0.7rem;
-    border-top: 2px dashed red;
-    text-align: right;
-
+.productos-nuevos {
+    padding: 8rem 0 0;
 }
 
 .productos-destacados {
-
-    padding: 8rem 0 12rem;
-
-
+    padding: 4rem 0 8rem;
 }
 
 .product-card {
-    border: solid 5px red;
+    cursor: pointer;
+    border: solid 5px #AA4023;
     width: 100%;
     overflow: hidden;
     transition: border-radius .3s ease-in-out;
-
-}
-
-.lista-productos {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
 }
 
 .product-card img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-  display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
 }
 
 .product-card:hover{
-     border-radius: 30px;
-
+    border-radius: 30px;
 }
 
 .product-card-content {
-  padding: 16px;
+    padding: 16px;
 }
+
+/* .lista-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+} */
+
+.lista-productos {
+    display: grid;
+    gap: 3rem;
+}
+
 
 @media (min-width: 768px) {
 
-.lista-productos {
-    
-    flex-direction: row;
-    
+/* .lista-productos {
+    flex-direction: row;    
+} */
+
+.lista-productos {    
+grid-template-columns: 1fr 1fr;   
+}
+
+}
+
+
+@media (min-width: 1024px) {
+
+.lista-productos {    
+    grid-template-columns: 1fr 1fr 1fr ;
 }
 
 }
