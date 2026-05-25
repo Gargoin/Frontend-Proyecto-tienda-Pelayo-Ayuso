@@ -20,7 +20,7 @@ function Home () {
 
         <section className="productos-nuevos">
             <div className="container">
-                <h2>Nuevos productos</h2>
+                <h2>Novedades</h2>
                 <ProductList productos={nuevosProductos}/>
             </div>
         </section>
