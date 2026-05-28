@@ -1,9 +1,7 @@
 function Header () {
     return (
          <header className="site-header container">
-
-imagen del logo
-
+            <p className="header-text">the Project</p>
          </header>
     )
 };
