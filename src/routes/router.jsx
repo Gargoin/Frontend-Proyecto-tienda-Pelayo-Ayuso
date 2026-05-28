@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import ProductsPage from "../pages/ProductsPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export const router = createBrowserRouter([
     {
@@ -18,8 +19,12 @@ export const router = createBrowserRouter([
             element: <ProductsPage />
         },
         {
-            path: "productos/:id",
+            path: "/productos/:id",
             element: <ProductDetailPage/>
+        },
+        {
+            path: "*",
+            element:<NotFoundPage/>
         }
     ]
 

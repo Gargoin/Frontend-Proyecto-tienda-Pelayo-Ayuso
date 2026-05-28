@@ -1,6 +1,7 @@
 import ProductList from "../components/ProductList"
 import{ productos } from "../data/productos";
 import { useState } from "react";
+import FeaturedProducts from "../components/FeaturedProducts";
 
 function Home () {
     // const [search, setSearch] = useState("");
@@ -28,19 +29,8 @@ function Home () {
 
     })
 
-
-    // let productosFiltrados = [];
-
-    // if(search) {
-    // productosFiltrados = productos.filter((producto) => 
-    //     producto.nombre.toLocaleLowerCase().includes(search.toLowerCase())
-    // );
-    // }
-
-    const productosDestacados = productos.filter(producto => producto.destacado); 
     const hasResults = productosFiltrados.length > 0;
 
-    // const nuevosProductos = productos.slice(0,3);
 
    
 
@@ -55,19 +45,11 @@ function Home () {
 
             <section className="producto-destacado">
             <div className="container">
-                <h2>Destacado:</h2>
-                <ProductList productos={productosDestacados}/>
+                <h2>Producto destacado:</h2>
+                <FeaturedProducts productos={productos}/>
             </div>
         </section>
 
-        {/* <section className="hero">
-            <div className="container">
-                <span className="hero-label">Proyecto</span>
-                <h1>The Doomgeon Project</h1>
-                <p>TEXTO DEL HERO - Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque alias eveniet autem odit tempora. Amet nisi repudiandae id sed quos, dolore natus reprehenderit adipisci aliquam quas laborum et porro illum?</p>
-                <a className="button" href="#"><span>Ver productos</span></a>
-            </div>
-        </section> */}
 
         <section className="productos">
             <div className="container">
@@ -94,35 +76,6 @@ function Home () {
                 <ProductList productos={sortedProducts}/>
             </div>
         </section>
-
-        {/* <section className="productos-nuevos">
-            <div className="container">
-                <h2>Novedades</h2>
-                <ProductList productos={nuevosProductos}/>
-            </div>
-        </section>
-
-
-        <section className="productos-destacados">
-            <div className="container">
-                <h2>Contenido destacado</h2>
-                    <ProductList productos={productosDestacados}/>
-            </div>
-        </section> */}
-
-        {/* <section className="seccion-catalogo">
-             <div className="container">
-                <div className="header-section">
-                    <h2>Explorar productos</h2>
-                    <label for="search" class="search-label" htmlFor="search">
-                        Buscar:
-                    </label>
-                    <input className="search-input" placeholder="Buscar..." type="text" name="search" id="search" value={search} onChange={(event) => setSearch(event.target.value)}/>
-                </div>
-                {search && !hasResults && (<p className="error-message">Sin resultados</p>)}
-                {hasResults && <ProductList productos={productosFiltrados}/>}
-            </div>
-        </section> */}
        
 
     </main>

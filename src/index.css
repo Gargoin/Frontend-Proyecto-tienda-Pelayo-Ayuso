@@ -1,7 +1,7 @@
 /* RESET */
 
 * {
-    box-sizing: border-box; /* con esto el ancho y alto ya mete el borde */
+    box-sizing: border-box;
 }
 
 body {
@@ -14,6 +14,9 @@ body {
 p {
     font-weight: 150;
 }
+
+
+/* HERO */
 
 .hero {
     padding: 2rem 0;
@@ -30,6 +33,9 @@ p {
 .hero p {
     line-height: 1.3rem;
 }
+
+
+/* BOTONES */
 
 .button,
 .button-crear {
@@ -61,6 +67,19 @@ p {
     border: solid 5px #FFAA00;
 }
 
+.botonera {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+}
+
+
+main h2 {
+    font-size: 2rem;
+    color:#31f413;
+}
+
+
 .container {
     width: min(1100px, 90%);
     margin: 0 auto;
@@ -81,7 +100,6 @@ img {
 }
 
 .site-header{
-    /* border: solid 5px #AA4023; */
     height: 150px;
     min-height: 100px;
 }
@@ -114,24 +132,23 @@ img {
 }
 
 .productos {
-
-    margin-bottom: 4rem;
-
+    margin: 4rem 0;
 }
 
-.productos-nuevos {
-    padding: 8rem 0 0;
+.productos h2 {
+    font-size: 2rem;
+    color: #faf8e7;
+    margin: 0 0 1rem 0;
 }
 
-.productos-destacados {
-    padding: 4rem 0 8rem;
-}
 
 .seccion-catalogo {
     padding: 4rem 0 8rem;
 
 } 
 
+
+/* PRODUCUT CARD */
 .product-card {
     cursor: pointer;
     border: solid 5px #AA4023;
@@ -166,20 +183,49 @@ img {
 
 .container-detalle {
     display: flex;
+    justify-content: center;
 
 }
 
-.container-detalle img {
-    width: 40%;
-
-}
-
-
-/* .lista-productos {
+.container-destacado {
     display: flex;
-    flex-direction: column;
-    gap: 3rem;
-} */
+    cursor: pointer;
+    border: solid 5px #31f413;
+    width: 100%;
+    overflow: hidden;
+    transition: border-radius .3s ease-in-out;
+
+}
+
+.container-destacado:hover{
+    border-radius: 30px;
+}
+
+.container-destacado-content {
+    flex:1;
+    padding-left: 2rem;
+
+}
+.container-destacado-content h2 {
+    font-size: 2rem; 
+    color: #31f413;
+}
+
+.container-destacado-content h3 {
+    font-size: 2rem;
+}
+
+.container-destacado-content p {
+    font-size: 1.2rem;
+}
+
+.container-detalle img,
+.container-destacado img {
+    width: 50%;
+    object-fit: cover;
+    display: block;
+    
+}
 
 .lista-productos {
     display: grid;
@@ -219,9 +265,6 @@ img {
 
 @media (min-width: 768px) {
 
-/* .lista-productos {
-    flex-direction: row;    
-} */
 
 .lista-productos {    
 grid-template-columns: 1fr 1fr;   
