@@ -53,7 +53,7 @@ function Home () {
 
         <section className="productos">
             <div className="container">
-                <h2>Productos:</h2>
+                <h2>Catálogo de Productos:</h2>
                 <div className="header-section">
                 <div>
                     <h3>Filtro:</h3>

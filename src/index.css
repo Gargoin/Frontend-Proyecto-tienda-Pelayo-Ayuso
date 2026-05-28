@@ -69,14 +69,14 @@ p {
 
 .botonera {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     gap: 1rem;
 }
 
 
 main h2 {
     font-size: 2rem;
-    color:#31f413;
+    margin: .3rem 0;
 }
 
 
@@ -138,7 +138,6 @@ img {
 .productos h2 {
     font-size: 2rem;
     color: #faf8e7;
-    margin: 0 0 1rem 0;
 }
 
 
@@ -173,7 +172,7 @@ img {
 }
 
 .detalle-producto-content {
-    padding-left: 4rem;
+    padding-left: 0rem;
 }
 
 .detalle-producto {
@@ -181,34 +180,40 @@ img {
 
 }
 
+
+/* CONTAINERS */
+
 .container-detalle {
     display: flex;
-    justify-content: center;
-
+    flex-direction: column;
+    align-items: center;
 }
+
+.container-detalle img,
+.container-destacado img {
+    width: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.container-detalle img {
+    border: solid 5px #31f413;
+    width: 100%;
+}
+
 
 .container-destacado {
     display: flex;
     cursor: pointer;
     border: solid 5px #31f413;
     width: 100%;
+    height: 200px;
     overflow: hidden;
     transition: border-radius .3s ease-in-out;
-
 }
 
 .container-destacado:hover{
     border-radius: 30px;
-}
-
-.container-destacado-content {
-    flex:1;
-    padding-left: 2rem;
-
-}
-.container-destacado-content h2 {
-    font-size: 2rem; 
-    color: #31f413;
 }
 
 .container-destacado-content h3 {
@@ -219,18 +224,21 @@ img {
     font-size: 1.2rem;
 }
 
-.container-detalle img,
-.container-destacado img {
-    width: 50%;
-    object-fit: cover;
-    display: block;
-    
+.container-destacado-content {
+    flex:1;
+    padding-left: 2rem;
+
+}
+.producto-destacado h2 {
+    font-size: 2rem; 
+    color: #31f413;
 }
 
 .lista-productos {
     display: grid;
     gap: 3rem;
 }
+
 .header-section{
     padding: 0 0 2rem 0;
     display: flex;
@@ -238,8 +246,13 @@ img {
     align-items: center;
 }
 
+.header-section h3 {
+    margin-top: 0.4rem;
+    margin-bottom: 0.9rem;
+}
+
 .search-input {
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 0.8rem;
     background: transparent;
     color: #faf8e7;
     border: solid 5px #AA4023;
@@ -276,6 +289,27 @@ grid-template-columns: 1fr 1fr;
     line-height: 8rem;
 }
 
+.container-detalle {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.container-detalle img,
+.container-destacado img {
+    width: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.detalle-producto-content {
+    padding-left: 4rem;
+}
+
+.botonera {
+    justify-content: end;
+}
+
 }
 
 
@@ -284,5 +318,6 @@ grid-template-columns: 1fr 1fr;
 .lista-productos {    
     grid-template-columns: 1fr 1fr 1fr ;
 }
+
 
 }
