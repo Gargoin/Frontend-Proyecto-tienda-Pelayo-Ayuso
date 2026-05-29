@@ -6,9 +6,7 @@ export const productos = [
     precio: 59.99,
     imagen: "https://picsum.photos/id/180/800/600",
     descripcion: "Auriculares Bluetooth con cancelación de ruido y 20h de batería.",
-    destacado: true,
-    fecha: 12-6-80,
-    categoria: 2
+    categoria: "Textil"
   },
   {
     id: 2,
@@ -17,9 +15,7 @@ export const productos = [
     precio: 89.99,
     imagen: "https://picsum.photos/id/0/800/600",
     descripcion: "Teclado mecánico RGB con switches azules y estructura metálica.",
-    destacado: true,
-    fecha: 12-6-80,
-    categoria: 1
+    categoria: "Textil"
   },
   {
     id: 3,
@@ -28,9 +24,7 @@ export const productos = [
     precio: 39.99,
     imagen: "https://picsum.photos/id/1060/800/600",
     descripcion: "Ratón ergonómico con DPI ajustable hasta 16.000.",
-    destacado: false,
-    fecha: 13-6-80,
-    categoria: 2
+    categoria: "Textil"
   },
   {
     id: 4,
@@ -39,9 +33,7 @@ export const productos = [
     precio: 249.99,
     imagen: "https://picsum.photos/id/119/800/600",
     descripcion: "Monitor IPS de 27 pulgadas con resolución 2560x1440 y 144Hz.",
-    destacado: true,
-    fecha:3-6-80,
-    categoria: 1
+    categoria: "Prints"
   },
   {
     id: 5,
@@ -50,8 +42,6 @@ export const productos = [
     precio: 29.99,
     imagen: "https://picsum.photos/id/1080/800/600",
     descripcion: "Altavoz portátil resistente al agua con sonido 360°.",
-    destacado: false,
-    fecha: 12-1-80,
-    categoria: 1
+    categoria: "Prints"
   }
 ];
