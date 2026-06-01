@@ -6,7 +6,7 @@ function Navbar () {
         <nav className="navbar container">
             <div className="menu">
             <Link className="button" to="/">Home</Link>
-            <Link className="button-crear" to="/productos">Crear producto</Link>
+            <Link className="button-crear" to="/new">Crear producto</Link>
             </div>
 
             <div className="login">

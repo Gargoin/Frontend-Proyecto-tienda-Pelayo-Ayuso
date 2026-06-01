@@ -22,7 +22,7 @@ function ProductDetailPage () {
     <main>
         <section className="detalle-producto">
             <div className="container-detalle container">
-                <img src={producto.imagen} alt={producto.nombre}/>
+                <img src={producto.imagenDetalle} alt={producto.nombre}/>
                 <div className="detalle-producto-content">
                     <h1>{producto.nombre}</h1>
                     <p>{producto.precio} €</p>

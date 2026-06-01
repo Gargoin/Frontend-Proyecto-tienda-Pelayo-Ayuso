@@ -6,6 +6,7 @@ import ProductList from "../components/ProductList"
 import ProductFilters from "../components/ProductFilters";
 import useFilteredSortedProducts from "../hooks/useFilteredSortedProducts";
 
+
 function Home () {
 
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas las categorías");

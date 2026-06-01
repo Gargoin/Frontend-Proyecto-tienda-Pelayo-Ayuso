@@ -152,8 +152,12 @@ img {
     transition: border-radius .3s ease-in-out;
 }
 
-.product-card.Textil {
+.product-card.Camiseta {
     border: solid 5px #fcff43;
+}
+
+.product-card.Parche {
+    border: solid 5px #f0a059;
 }
 
 .product-card.Prints {
@@ -197,10 +201,6 @@ img {
     width: 50%;
     object-fit: cover;
     display: block;
-}
-
-.container-detalle img {
-    border: solid 5px #31f413;
     width: 100%;
 }
 
@@ -272,13 +272,18 @@ img {
 
 .search-input {
     padding: 0.5rem 0.8rem;
-    background: transparent;
+    background-color: #282d2f;
     color: #faf8e7;
     border: solid 5px #AA4023;
     border-radius: 0;
     transition: border-radius .3s ease-in-out;
     outline: none;
     cursor: pointer;
+}
+
+.search-input option {
+    background-color: #282d2f;
+    color: #faf8e7;
 }
 
 .search-input:hover {
@@ -292,6 +297,85 @@ img {
 .search-label {
     display: none;
 }
+
+.search-box {
+    position: relative;
+}
+
+.search-box-results {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background-color: #1f2937;
+    border: solid 5px #AA4023;
+    border-radius: 0;
+    transition: border-radius .3s ease-in-out;
+    overflow: hidden;
+    z-index: 50;
+}
+.search-box-results:hover{
+    border-radius: 30px;
+
+}
+
+.search-box-result {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0.85rem;
+}
+
+.search-box-result:hover {
+    
+    background-color: #1f2937;
+}
+
+.search-box-result span {
+    color: #9ca3af;
+    font-size: 0.85rem;
+}
+
+.search-box-empty {
+    padding:0 0 0 0.85rem;
+
+}
+
+/* CARRUSEL */
+
+.product-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.product-carousel-item {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.product-carousel-section {
+  padding: 40px 0 80px;
+}
+
+.product-carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 24px;
+}
+
+.product-carousel-header h2 {
+  margin: 0;
+}
+
+.product-carousel-header span {
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
 
 
 /* MEDIA QUERIES */
