@@ -1,8 +1,26 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 function SearchBox({productos}) {
     const [search, setSearch] = useState("");
+    const searchBoxRef = useRef(null);
+
+     useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                searchBoxRef.current &&
+                !searchBoxRef.current.contains(event.target)
+            ) {
+                setSearch("");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const normalizedSearch = search.toLowerCase().trim();
 
@@ -14,7 +32,7 @@ function SearchBox({productos}) {
     })
 
     return (
-        <div className="search-box">
+        <div className="search-box" ref={searchBoxRef}>
             <input type="search" className="search-input" placeholder="Buscar..." value={search} onChange={(event) => setSearch(event.target.value)}/>
 
             {search.trim() != "" && (

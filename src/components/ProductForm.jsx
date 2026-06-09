@@ -1,209 +1,203 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {useState, useEffect} from "react";
+import {useParams, Link, useNavigate} from "react-router-dom";
+import { getProducts, createProduct } from "../services/productService";
 
+const initialForm = {
+    nombre: "",
+    stock: "",
+    precio: "",
+    imagen: "",
+    imagenDetalle: "",
+    descripcion: "",
+    categoria: "Elige una categoría"
+  }
 
-const initialState = {
-  nombre: "",
-  descripcion: "",
-  precio: "",
-  stock: "",
-  imagen: "",
-  imagenDetalle: "",
-  categoria: "Textil"
+function ProductForm ({onCreateProduct, product, onUpdateProduct}) {
 
-};
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-function ProductForm() {
-  const { logout } = useAuth();
-  const { id } = useParams();
+  const [form, setForm] = useState(initialForm);
+  const {id} = useParams();
   const navigate = useNavigate();
-
   const isEdit = Boolean(id);
-
-  const [form, setForm] = useState(initialState);
-  const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+
+  
 
   useEffect(() => {
     if (!isEdit) {
+      setForm(initialForm);
       return;
-    }
+  }
 
-    // const loadProduct = async () => {
-    //   try {
-    //     setLoading(true);
+  const loadProduct = () => {
+    
+    setLoading(true);
 
-    //     const data = await getProductById(id);
+        const data = products.find((p) => p.id == id);
 
-    //     setForm({
-    //       name: data.name,
-    //       price: data.price,
-    //       stock: data.stock,
-    //     });
-    //   } catch (error) {
-    //     setError(error.message);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
+        setForm({
+          nombre: data.nombre,
+          stock: data.stock,
+          precio: data.precio,
+          imagen: data.imagen,
+          imagenDetalle: data.imagenDetalle,
+          descripcion: data.descripcion,
+          categoria: data.categoria,
+        });
+
+        console.log(data);
+
+    };
 
     loadProduct();
   }, [id, isEdit]);
 
+
+
   const handleChange = (event) => {
-    const { name, value } = event.target;
 
-    setForm({ ...form, [name]: value });
+    const {name, value} = event.target;
+
+    setForm({
+      ...form, 
+      [name]: value,
+
+    })
   };
 
-  const validateForm = () => {
-    if (!form.name) {
-      return "El nombre es obligatorio";
-    }
+  const handleCreateProduct = async () => {
+    
+  }
 
-    if (form.name.trim().length < 3) {
-      return "El nombre debe tener al menos 3 caracteres";
-    }
-
-    if (!form.price) {
-      return "El precio es obligatorio";
-    }
-
-    if (isNaN(Number(form.price))) {
-      return "El precio debe ser un numero";
-    }
-
-    if (Number(form.price) <= 0) {
-      return "El precio debe ser mayor a 0";
-    }
-
-    if (!form.stock) {
-      return "El stock es obligatorio";
-    }
-
-    if (isNaN(Number(form.stock))) {
-      return "El stock debe ser un numero";
-    }
-
-    if (Number(form.stock) <= 0) {
-      return "El stock debe ser mayor a 0";
-    }
-
-    return "";
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
+    
+    const elemento = document.querySelector('.product-form.container');
     event.preventDefault();
+    
 
-    const validationError = validateForm();
-
-    if (validationError) {
-      setError(validationError);
+    if (!form.nombre.trim()){
+      alert("Ingresa el nombre del producto.");
       return;
     }
 
-    setError("");
-    setSaving(true);
-
-    const productData = {
-      name: form.name.trim(),
-      price: Number(form.price),
-      stock: Number(form.stock),
-    };
-
-    try {
-      if (isEdit) {
-        await updateProduct(productData, id);
-      } else {
-        await createProduct(productData);
-      }
-
-      // await loadProducts();
-      setForm(initialState);
-      navigate("/");
-    } catch (error) {
-      if (error.status == 401) {
-        logout();
-
-        navigate("/login");
-
-        return;
-      }
-
-      setError(error.message);
-    } finally {
-      setSaving(false);
+    if (!form.descripcion.trim()){
+      alert("Es necesaria la descripción del producto.");
+      return;
     }
-  };
 
-  const isDisabled = !form.name || !form.price || !form.stock || saving;
+    if (!form.categoria){
+      alert("Falta indicar una categoría del producto.");
+      return;
+    }
 
-  if (loading) {
-    return <Loading text="Cargando el producto..." />;
-  }
+    if (!form.precio){
+      alert("Falta indicar el precio del producto.");
+      return;
+    }
 
-  if (error) {
-    return <ErrorMessage error={error} />;
+    if (!form.stock){
+      alert("Indica el stock del producto.");
+      return;
+    }
+
+    if (!form.imagen){
+      alert("Falta la URL de la imagen del producto.");
+      return;
+    }
+
+    if (!form.imagenDetalle){
+      alert("Falta la URL para la imagen del detalle del producto.");
+      return;
+    }
+
+     elemento.style.display = 'none';
+
+    setForm(initialForm);
+
+    setMessage("Producto guardado correctamente");
+          setTimeout(() => {
+        setMessage("");
+        navigate("/");
+      }, 3000);
+
   }
 
   return (
-    <section>
-      <h2>{isEdit ? "Editar" : "Crear"} Producto</h2>
+    <>
+      {message && <div className="mensaje-exito container"><p>{message}</p></div>}
+    <form className="product-form container" onSubmit={handleSubmit}>
+      <h2>{isEdit ? `Editando ${form.nombre}` : "Nuevo producto"}</h2>
+      <div className="form-group">
+        <label htmlFor="nombre">Nombre:</label>
+        <input className="search-input" type="text" placeholder="Nombre del producto" id="nombre" name="nombre" value={form.nombre} onChange={handleChange}></input>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Nombre: </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-          />
+      <div className="form-group">
+        <label htmlFor="descripcion">Descripción del producto:</label>
+        <textarea className="search-input" type="textarea" placeholder="Descripción del producto" id="descripcion" name="descripcion" value={form.descripcion} onChange={handleChange}></textarea>
+      </div>
+      
+      <div className="form-group-3">
+      <div>
+        <label htmlFor="categoria">Categoria:</label>
+        <select className="search-input" id= "categoria" name="categoria" value={form.categoria} onChange={handleChange}>
+          <option value="">Selecciona una categoría</option>
+          <option value="Camiseta">Camiseta</option>
+          <option value="Print">Print</option>
+        </select>
+      </div>
+
+      <div>
+        <label htmlFor="precio">Precio:</label>
+        <input className="search-input" type="number" placheolder="Precio del producto" id="precio" name="precio" value={form.precio} onChange={handleChange}></input>
+      </div>
+
+      <div>
+        <label htmlFor="stock">Stock:</label>
+        <input className="search-input" type="number" placheolder="Stock del producto" id="stock" name="stock" value={form.stock} onChange={handleChange}></input>
+      </div>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="imagen">Imagen:</label>
+        <input className="search-input" type="text" placeholder="URL de la imagen del producto" id="imagen" name="imagen" value={form.imagen} onChange={handleChange}></input>
+      </div>
+
+      {form.imagen.trim() && (
+        <div className="imagen-preview">
+          <img src={form.imagen} alt="Vista previa"/>
         </div>
+      )}
 
-        <div className="form-group">
-          <label htmlFor="price">Precio: </label>
-          <input
-            type="number"
-            step="any"
-            id="price"
-            name="price"
-            value={form.price}
-            onChange={handleChange}
-          />
+      <div className="form-group">
+        <label htmlFor="imagenDetalle">Nombre:</label>
+        <input className="search-input" type="text" placeholder="URL de la imagen del detalle del producto" id="imagenDetalle" name="imagenDetalle" value={form.imagenDetalle} onChange={handleChange}></input>
+      </div>
+
+      {form.imagenDetalle.trim() && (
+        <div className="imagen-preview">
+          <img src={form.imagenDetalle} alt="Vista previa"/>
         </div>
+      )}
 
-        <div className="form-group">
-          <label htmlFor="stock">Stock: </label>
-          <input
-            type="number"
-            step="any"
-            id="stock"
-            name="stock"
-            value={form.stock}
-            onChange={handleChange}
-          ></input>
-        </div>
+      {error && <div className="mensaje-alerta"><p>{error}</p></div>}
+      
 
-        {error && <p className="error">{error}</p>}
+      <div className="botonera">
+        <button type="submit" className="button-crear">Guardar producto</button>
+        <Link className="button-crear" to="/">Cancelar</Link>
+      </div>
+    </form>
+    </>
 
-        <div className="form-actions">
-          <button type="submit" disabled={isDisabled}>
-            {saving && (isEdit ? "Editando" : "Creando")}
-            {!saving && (isEdit ? "Editar" : "Crear")} producto
-          </button>
-
-          {isEdit && (
-            <button type="button" onClick={() => navigate("/")}>
-              Cancelar
-            </button>
-          )}
-        </div>
-      </form>
-    </section>
   );
+
+
 }
 
 export default ProductForm;

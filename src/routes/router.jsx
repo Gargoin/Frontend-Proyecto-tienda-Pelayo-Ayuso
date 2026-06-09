@@ -6,6 +6,7 @@ import ProductsPage from "../pages/ProductsPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductForm from "../components/ProductForm";
+import Login from "../components/Login";
 
 export const router = createBrowserRouter([
     {
@@ -20,8 +21,16 @@ export const router = createBrowserRouter([
             element: <ProductForm />
         },
         {
+            path: "edit/:id",
+            element: <ProductForm />
+        },
+        {
             path: "productos/:id",
             element: <ProductDetailPage/>
+        },
+        {
+            path: "login",
+            element: <Login />,
         },
         {
             path: "*",

@@ -3,13 +3,14 @@ import {Link} from "react-router-dom";
 function NotFoundPage() {
     return (
         <main>
-            <section className="">
-                <div className="container">
-                    <h1>Página no encontrada</h1>
-                    <p>La página que estás bsucando no existe.</p>
-                    <Link className="button" to="/">Volver</Link>
-                </div>
-            </section>
+                <section className="detalle-producto">
+                    <div className="container-detalle container">
+                        <div className="mensaje-no-econtrado">
+                            <h2>Página no encontrada</h2>
+                            <Link className="button" to="/">Volver</Link>
+                        </div>
+                    </div>
+                </section> 
         </main>
     );
 }

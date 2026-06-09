@@ -10,8 +10,7 @@ function Navbar () {
             </div>
 
             <div className="login">
-            <Link className="button" to="#">Crear cuenta</Link>
-            <Link className="button" to="#">Login</Link>
+            <Link className="button" to="/login">Login</Link>
             </div>
         </nav>
     )

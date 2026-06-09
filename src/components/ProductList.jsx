@@ -1,13 +1,11 @@
 import ProductCard from "./ProductCard";
 
-function ProductList ({productos}) {
-
-
+function ProductList ({products}) {
 
     return (
         <div className="lista-productos">
-            {productos.map((producto) => (
-                <ProductCard key={producto.id} producto={producto}/>
+            {products.map((product) => (
+                <ProductCard key={product._id} product={product}/>
             ))}
         </div>
     )

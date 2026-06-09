@@ -1,19 +1,19 @@
 import { useState } from "react";
 import FeaturedProduct from "./FeaturedProduct";
 
-function FeaturedProducts({ productos }) {
+function FeaturedProducts({ products }) {
 
     const [productoAleatorio] = useState(() => {
-        if (!productos || productos.length === 0) return null;
+        if (!products || products.length === 0) return null;
 
-        const indiceAleatorio = Math.floor(Math.random() * productos.length);
-        return productos[indiceAleatorio];
+        const indiceAleatorio = Math.floor(Math.random() * products.length);
+        return products[indiceAleatorio];
     });
 
     if (!productoAleatorio) return null;
 
     return (
-        <FeaturedProduct producto={productoAleatorio} />
+        <FeaturedProduct product={productoAleatorio} />
     );
 }
 
