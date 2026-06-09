@@ -1,5 +1,5 @@
 import {useParams, Link, useNavigate} from "react-router-dom";
-import { getProductById } from "../services/productService";
+import { getProductById, deleteProduct } from "../services/productService";
 import {useState, useEffect} from "react";  
 
 function ProductDetailPage () {
@@ -7,8 +7,6 @@ function ProductDetailPage () {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    
 
     const {id} = useParams();
     const navigate = useNavigate();
@@ -44,17 +42,24 @@ function ProductDetailPage () {
 
 
 
-    const handleDelete = (id) => {
+    const handleDelete = async (id) => {
+      try {
+
+        await deleteProduct(id);
         const elemento = document.querySelector('.container-detalle.container');
-
         setProductToDelete(null);
-
         setMessage("Producto eliminado correctamente");
         elemento.style.display = 'none';
+
+      }catch (error) {
+
+        setError(error.message);
+      }
+
+
+
         
     }
-
-    
 
     useEffect(() => {
             if (!message) {
@@ -133,7 +138,7 @@ function ProductDetailPage () {
               <button
                 className="button-modal danger"
                 type="button"
-                onClick={() => handleDelete(productToDelete.id)}
+                onClick={() => handleDelete(productToDelete._id)}
               >
                 Eliminar
               </button>

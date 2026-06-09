@@ -43,9 +43,35 @@ export const createProduct = async (productData) => {
     });
 
     if (!response.ok) {
-        const errorDAta = await response.json();
+        const errorData = await response.json();
         throw new Error(errorData.message || "Error al crear el producto");
     }
 
     return response.json();
 };
+
+
+export const updateProduct = async (productId, productData) => {
+
+    const response = await fetch(`${API_URL}/${productId}`, {
+        method: "PUT",
+        headers:{"Content-Type": "application/json"},
+        body: JSON-stringify(productData),
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al actualizar el producto");
+    }
+    
+    return response.json();
+
+};
+
+export const deleteProduct = async (productId) => {
+       const response = await fetch(`${API_URL}/${productId}`, {
+        method: "DELETE",
+    });
+
+    
+}

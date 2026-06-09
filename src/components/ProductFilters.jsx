@@ -1,16 +1,15 @@
 
-import{ productos } from "../data/productos";
 import { useState } from "react";
 
 import SearchBox from "../components/searchBox";
 
-function ProductFilters ({categoriaSeleccionada, sortBy, onCategoryChange, onSortBy}) {
+function ProductFilters ({categoriaSeleccionada, sortBy, onCategoryChange, onSortBy, products}) {
 
-    const categorias = ["Todas las categorías", ...new Set (productos.map((producto) => producto.categoria))];
+    const categorias = ["Todas las categorías", ...new Set (products.map((product) => product.categoria))];
 
     return (
             <div className="header-section">
-                <SearchBox productos={productos}/>
+                <SearchBox products={products}/>
 
                 <select className="search-input" value={categoriaSeleccionada} onChange={(event) => onCategoryChange(event.target.value)}>
                     {categorias.map(categoria =>(

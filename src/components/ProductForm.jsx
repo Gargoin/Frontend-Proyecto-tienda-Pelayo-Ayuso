@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {useParams, Link, useNavigate} from "react-router-dom";
-import { getProducts, createProduct } from "../services/productService";
+import { createProduct, updateProduct, getProductById } from "../services/productService";
 
 const initialForm = {
     nombre: "",
@@ -34,11 +34,12 @@ function ProductForm ({onCreateProduct, product, onUpdateProduct}) {
       return;
   }
 
-  const loadProduct = () => {
+  const loadProduct = async () => {
     
-    setLoading(true);
+try {
+        setLoading(true);
 
-        const data = products.find((p) => p.id == id);
+        const data = await getProductById(id);
 
         setForm({
           nombre: data.nombre,
@@ -50,7 +51,11 @@ function ProductForm ({onCreateProduct, product, onUpdateProduct}) {
           categoria: data.categoria,
         });
 
-        console.log(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
 
     };
 
@@ -70,9 +75,30 @@ function ProductForm ({onCreateProduct, product, onUpdateProduct}) {
     })
   };
 
-  const handleCreateProduct = async () => {
+  const handleUpdateProduct = async (productId, productData) => {
+    const updatedProduct = await updateProduct (productId, productData);
+
+    const updatedProducts = products.map ((product) => {
+      if (product._id == productId) {
+        return updatedProduct;
+      }
+      return product;
+    });
     
+    setProducts(updatedProducts);
+
   }
+
+  // const handleCreateProduct = async (productData) => {
+
+  // try {
+
+  //   const newProduct = await createProduct(productData);
+
+
+  // }
+    
+  // }
 
   const handleSubmit = (event) => {
     
