@@ -1,18 +1,21 @@
-const API_URL = 'http://localhost:3000/api/products';
+const API_URL = import.meta.env.VITE_API_URL;
+
+const handleResponse = async (response) => {
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || "Error en la petición");
+    };
+    
+    return data;
+    
+};
 
 export const getProducts = async () => {
 
     const response = await fetch(API_URL);
 
-    console.log(response);
-
-    if (!response.ok){
-        throw new Error("Error al obtener los productos");
-    }
-
-    const data = await response.json();
-
-    return data;
+    return handleResponse(response);
 
 };
 
@@ -21,17 +24,7 @@ export const getProductById = async (id) =>  {
 
     const response = await fetch(`${API_URL}/${id}`);
 
-    if(!response.ok) {
-
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al obtener el producto");
-    }
-
-
-    const data = await response.json();
-
-    return data;
-
+    return handleResponse(response);
 };
 
 export const createProduct = async (productData) => {
@@ -42,12 +35,7 @@ export const createProduct = async (productData) => {
         body: JSON.stringify(productData),
     });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al crear el producto");
-    }
-
-    return response.json();
+    return handleResponse(response);
 };
 
 
@@ -59,19 +47,16 @@ export const updateProduct = async (productData, productId) => {
         body: JSON.stringify(productData),
     });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Error al actualizar el producto");
-    }
-    
-    return response.json();
+    return handleResponse(response);
 
 };
 
 export const deleteProduct = async (productId) => {
-       const response = await fetch(`${API_URL}/${productId}`, {
+
+    const response = await fetch(`${API_URL}/${productId}`, {
         method: "DELETE",
     });
 
+    return handleResponse(response);
     
 }

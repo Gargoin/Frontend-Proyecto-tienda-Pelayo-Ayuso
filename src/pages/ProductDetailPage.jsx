@@ -6,6 +6,7 @@ function ProductDetailPage () {
     
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
     const {id} = useParams();
@@ -43,7 +44,9 @@ function ProductDetailPage () {
 
 
     const handleDelete = async (id) => {
+      
       try {
+        setSaving(true);
 
         await deleteProduct(id);
         const elemento = document.querySelector('.container-detalle.container');
@@ -54,11 +57,10 @@ function ProductDetailPage () {
       }catch (error) {
 
         setError(error.message);
+      } finally {
+        setSaving(false);
       }
-
-
-
-        
+     
     }
 
     useEffect(() => {
@@ -69,7 +71,7 @@ function ProductDetailPage () {
             setTimeout(() => {
                 setMessage("");
                 navigate("/");
-            }, 3000);
+            }, 2000);
         }, [message]);
 
 
@@ -127,21 +129,10 @@ function ProductDetailPage () {
             </p>
 
             <div className="modal-actions">
-              <button
-                className="button-modal secondary"
-                type="button"
-                onClick={() => setProductToDelete(null)}
-              >
-                Cancelar
-              </button>
 
-              <button
-                className="button-modal danger"
-                type="button"
-                onClick={() => handleDelete(productToDelete._id)}
-              >
-                Eliminar
-              </button>
+              <button disabled ={saving} className="button-modal secondary" type="button" onClick={() => setProductToDelete(null)}>Cancelar</button>
+              <button disabled={saving} className="button-modal danger" type="button" onClick={() => handleDelete(productToDelete._id)}>{saving ? "Eliminando..." : "Eliminar"}</button>
+
             </div>
           </div>
         </div>

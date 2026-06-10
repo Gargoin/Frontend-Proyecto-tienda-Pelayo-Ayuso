@@ -7,6 +7,8 @@ const initialForm = {
     contraseña: ""
   }
 
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function Login () {
 
     const [form, setForm] = useState(initialForm);
@@ -22,6 +24,7 @@ function Login () {
    const isDisabled = !form.email || !form.password || loading;
 
     const validateForm = () => {
+
     if (!form.email.trim()) {
       return "El correo electrónico es obligatorio";
     }
@@ -32,10 +35,6 @@ function Login () {
 
     if (!form.password.trim()) {
       return "La contraseña es obligatoria";
-    }
-
-    if (form.password.trim().length < 6) {
-      return "La contraseña debe tener al menos 6 caracteres";
     }
 
     return null;

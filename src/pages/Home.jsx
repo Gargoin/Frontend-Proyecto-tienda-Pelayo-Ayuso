@@ -29,7 +29,6 @@ function Home() {
     const loadProducts = async () => {
       try {
         const data = await getProducts();
-        console.log(data);
         setProducts(data);
 
       } catch (error) {
@@ -53,7 +52,7 @@ function Home() {
   if (error) {
     return (
       <div className="container">
-        <p>{error}</p>
+        <p className="cargando">{error}</p>
       </div>
     );
   }

@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  createProduct,
-  updateProduct,
-  getProductById,
-} from "../services/productService";
+import { createProduct, updateProduct, getProductById } from "../services/productService";
 
 const initialForm = {
   nombre: "",
@@ -30,38 +26,48 @@ function ProductForm() {
   const isEdit = Boolean(id);
 
   useEffect(() => {
+
     if (!isEdit) {
       setForm(initialForm);
       return;
     }
 
     const loadProduct = async () => {
-      try {
-        setLoading(true);
 
+      try {
+
+        setLoading(true);
         const data = await getProductById(id);
 
         setForm({
-          nombre: data?.nombre || "",
-          stock: data?.stock || "",
-          precio: data?.precio || "",
-          imagen: data?.imagen || "",
-          imagenDetalle: data?.imagenDetalle || "",
-          descripcion: data?.descripcion || "",
-          categoria: data?.categoria || "",
+          nombre: data.nombre,
+          stock: data.stock,
+          precio: data.precio,
+          imagen: data.imagen,
+          imagenDetalle: data.imagenDetalle,
+          descripcion: data.descripcion,
+          categoria: data.categoria,
         });
+
       } catch (error) {
+
         setError(error.message || "Error al cargar el producto");
+
       } finally {
+
         setLoading(false);
+
       }
     };
 
     loadProduct();
+
   }, [id, isEdit]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+     setError("");
 
     setForm((prev) => ({
       ...prev,
@@ -74,7 +80,7 @@ function ProductForm() {
       return "Ingresa el nombre del producto.";
     }
 
-    if (form.nombre.length < 3) {
+    if (form.nombre.trim().length < 3) {
       return "El nombre debe tener al menos 3 caracteres"
     }
 
@@ -82,7 +88,7 @@ function ProductForm() {
       return "Es necesaria la descripción del producto.";
     }
 
-      if (form.descripcion.length < 30) {
+      if (form.descripcion.trim().length < 30) {
       return "La descripción debe tner al menos 30 caracteres.";
     }
 
@@ -94,8 +100,16 @@ function ProductForm() {
       return "Falta indicar el precio del producto.";
     }
 
-    if (!form.stock) {
+    if (Number(form.precio) < 0) {
+      return "El precio no puede ser negativo.";
+    }
+
+    if (!form.stock === "") {
       return "Indica el stock del producto.";
+    }
+
+    if (Number(form.stock) < 0) {
+      return "El stock no puede ser negativo.";
     }
 
     if (!form.imagen.trim()) {
@@ -110,7 +124,9 @@ function ProductForm() {
   };
 
   const handleSubmit = async (event) => {
+  
     event.preventDefault();
+    if (saving) return;
 
     const validationError = validateForm();
 
@@ -133,20 +149,22 @@ function ProductForm() {
     };
 
     try {
-      
+
       if (isEdit) {
+
         await updateProduct(productData, id);
-        setMessage("Producto actualizado correctamente.");
+
       } else {
+
         await createProduct(productData);
-        setMessage("Producto creado correctamente.");
-      }
 
+      } 
 
+      setMessage("Producto guardado correctamente.");
 
       setTimeout(() => {
         navigate("/");
-      }, 1000);
+      }, 2000);
 
     } catch (error) {
       console.error(error);
@@ -174,7 +192,7 @@ function ProductForm() {
           <p>{message}</p>
         </div>
       )}
-
+      {!message && (
       <form className="product-form container" onSubmit={handleSubmit}>
         <h2>
           {isEdit ? `Editando ${form.nombre}` : "Nuevo producto"}
@@ -182,41 +200,20 @@ function ProductForm() {
 
         <div className="form-group">
           <label htmlFor="nombre">Nombre:</label>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Nombre del producto"
-            id="nombre"
-            name="nombre"
-            value={form.nombre}
-            onChange={handleChange}
-          />
+          <input className="search-input" type="text" placeholder="Nombre del producto" id="nombre" name="nombre" value={form.nombre} onChange={handleChange}/>
         </div>
 
         <div className="form-group">
           <label htmlFor="descripcion">
             Descripción del producto:
           </label>
-          <textarea
-            className="search-input"
-            placeholder="Descripción del producto"
-            id="descripcion"
-            name="descripcion"
-            value={form.descripcion}
-            onChange={handleChange}
-          />
+          <textarea className="search-input" placeholder="Descripción del producto" id="descripcion" name="descripcion" value={form.descripcion} onChange={handleChange}/>
         </div>
 
         <div className="form-group-3">
           <div>
             <label htmlFor="categoria">Categoría:</label>
-            <select
-              className="search-input"
-              id="categoria"
-              name="categoria"
-              value={form.categoria}
-              onChange={handleChange}
-            >
+            <select className="search-input" id="categoria" name="categoria" value={form.categoria} onChange={handleChange}>
               <option value="">Selecciona una categoría</option>
               <option value="Camiseta">Camiseta</option>
               <option value="Print">Print</option>
@@ -225,42 +222,18 @@ function ProductForm() {
 
           <div>
             <label htmlFor="precio">Precio:</label>
-            <input
-              className="search-input"
-              type="number"
-              placeholder="Precio del producto"
-              id="precio"
-              name="precio"
-              value={form.precio}
-              onChange={handleChange}
-            />
+            <input className="search-input" type="number" step="0.01" placeholder="Precio del producto" id="precio" name="precio" value={form.precio} onChange={handleChange}/>
           </div>
 
           <div>
             <label htmlFor="stock">Stock:</label>
-            <input
-              className="search-input"
-              type="number"
-              placeholder="Stock del producto"
-              id="stock"
-              name="stock"
-              value={form.stock}
-              onChange={handleChange}
-            />
+            <input className="search-input" type="number" placeholder="Stock del producto" id="stock" name="stock" value={form.stock} onChange={handleChange}/>
           </div>
         </div>
 
         <div className="form-group">
           <label htmlFor="imagen">Imagen:</label>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="URL de la imagen del producto"
-            id="imagen"
-            name="imagen"
-            value={form.imagen}
-            onChange={handleChange}
-          />
+          <input className="search-input" type="text" placeholder="URL de la imagen del producto" id="imagen" name="imagen" onError={(e) => {e.target.style.display = "none";}} value={form.imagen} onChange={handleChange}/>
         </div>
 
         {form.imagen.trim() && (
@@ -271,15 +244,7 @@ function ProductForm() {
 
         <div className="form-group">
           <label htmlFor="imagenDetalle">Imagen detalle:</label>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="URL de la imagen del detalle del producto"
-            id="imagenDetalle"
-            name="imagenDetalle"
-            value={form.imagenDetalle}
-            onChange={handleChange}
-          />
+          <input className="search-input" type="text" placeholder="URL de la imagen del detalle del producto" id="imagenDetalle" name="imagenDetalle" onError={(e) => {e.target.style.display = "none";}} value={form.imagenDetalle} onChange={handleChange}/>
         </div>
 
         {form.imagenDetalle.trim() && (
@@ -295,19 +260,11 @@ function ProductForm() {
         )}
 
         <div className="botonera">
-          <button
-            type="submit"
-            className="button-crear"
-            disabled={saving}
-          >
-            {saving ? "Guardando..." : "Guardar producto"}
-          </button>
-
-          <Link className="button-crear" to="/">
-            Cancelar
-          </Link>
+          <button type="submit" className="button-crear" disabled={saving}>{saving ? "Guardando..." : "Guardar producto"}</button>
+          <Link className="button-crear" to="/">Cancelar</Link>
         </div>
-      </form>
+
+      </form>)}
     </>
   );
 }
