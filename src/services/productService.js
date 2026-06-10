@@ -39,7 +39,7 @@ export const createProduct = async (productData) => {
     const response = await fetch(API_URL, {
         method: "POST",
         headers:{"Content-Type": "application/json"},
-        bosdy: JSON-stringify(productData),
+        body: JSON.stringify(productData),
     });
 
     if (!response.ok) {
@@ -51,12 +51,12 @@ export const createProduct = async (productData) => {
 };
 
 
-export const updateProduct = async (productId, productData) => {
+export const updateProduct = async (productData, productId) => {
 
     const response = await fetch(`${API_URL}/${productId}`, {
         method: "PUT",
         headers:{"Content-Type": "application/json"},
-        body: JSON-stringify(productData),
+        body: JSON.stringify(productData),
     });
 
     if (!response.ok) {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
-function SearchBox({productos}) {
+function SearchBox({products}) {
     const [search, setSearch] = useState("");
     const searchBoxRef = useRef(null);
 
@@ -24,9 +24,9 @@ function SearchBox({productos}) {
 
     const normalizedSearch = search.toLowerCase().trim();
 
-    const results = productos.filter(producto => {
-        const nombre = producto.nombre.toLowerCase();
-        const categoria = producto.categoria.toLowerCase();
+    const results = products.filter(product => {
+        const nombre = product.nombre.toLowerCase();
+        const categoria = product.categoria.toLowerCase();
 
         return (nombre.includes(normalizedSearch) || categoria.includes(normalizedSearch) );
     })
@@ -37,10 +37,10 @@ function SearchBox({productos}) {
 
             {search.trim() != "" && (
                 <div className="search-box-results">
-                {results.length > 0 ? (results.map((producto) => (                
-                <Link key={producto.id} onClick={() => setSearch("")}className="search-box-result" to={`/productos/${producto.id}`}>
-                <strong>{producto.nombre}</strong>
-                <span>{producto.categoria}</span>
+                {results.length > 0 ? (results.map((product) => (                
+                <Link key={product._id} onClick={() => setSearch("")}className="search-box-result" to={`/productos/${product._id}`}>
+                <strong>{product.nombre}</strong>
+                <span>{product.categoria}</span>
                 </Link>))) : (<p className="search-box-empty">No se encontaron resultados.</p>)}
             </div>
             )}

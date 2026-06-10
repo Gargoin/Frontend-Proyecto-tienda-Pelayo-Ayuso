@@ -23,6 +23,8 @@ function Home() {
     sortBy,
   );
 
+  
+
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -87,6 +89,7 @@ function Home() {
             sortBy={sortBy}
             onCategoryChange={setCategoriaSeleccionada}
             onSortBy={setSortBy}
+            products={products}
           />
           <ProductList products={sortedProducts} />
         </div>

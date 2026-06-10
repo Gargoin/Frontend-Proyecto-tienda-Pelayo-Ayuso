@@ -1,6 +1,6 @@
-function useFilteredSortedProducts (productos, categoriaSeleccionada, sortBy) {
+function useFilteredSortedProducts (products, categoriaSeleccionada, sortBy) {
 
-    const productosFiltrados = productos.filter((producto) => categoriaSeleccionada == "Todas las categorías" || producto.categoria == categoriaSeleccionada );
+    const productosFiltrados = products.filter((product) => categoriaSeleccionada == "Todas las categorías" || product.categoria == categoriaSeleccionada );
 
     const sortedProducts = [...productosFiltrados].sort((a,b) => {
         if(sortBy == "az") {
