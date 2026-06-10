@@ -1,10 +1,11 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router-dom";
 
 
 const initialForm = {
     email: "",
-    contraseña: ""
+    password: ""
   }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,16 +13,17 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function Login () {
 
     const [form, setForm] = useState(initialForm);
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const isDisabled = !form.email || !form.password || loading;
 
     const handleChange = (event) => {
-
         const {name, value} = event.target;
         setForm({...form, [name]: value,})
     };
-
-   const [showPassword, setShowPassword] = useState(false);
-   const [loading, setLoading] = useState(false);
-   const isDisabled = !form.email || !form.password || loading;
 
     const validateForm = () => {
 
@@ -43,7 +45,22 @@ function Login () {
   const handleSubmit = (event) => {
     event.preventDefault();
     const validationError = validateForm();
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    setError(null);
+    setLoading(true);
+
+    const user = {
+      email: form.email.trim(),
+      password: form.password,
+    };
+    console.log("epa");
     setForm(initialForm);
+    setLoading(false);
 
   }
 
