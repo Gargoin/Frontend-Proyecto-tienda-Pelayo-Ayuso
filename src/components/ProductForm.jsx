@@ -74,8 +74,16 @@ function ProductForm() {
       return "Ingresa el nombre del producto.";
     }
 
+    if (form.nombre.length < 3) {
+      return "El nombre debe tener al menos 3 caracteres"
+    }
+
     if (!form.descripcion.trim()) {
       return "Es necesaria la descripción del producto.";
+    }
+
+      if (form.descripcion.length < 30) {
+      return "La descripción debe tner al menos 30 caracteres.";
     }
 
     if (!form.categoria) {
@@ -91,7 +99,7 @@ function ProductForm() {
     }
 
     if (!form.imagen.trim()) {
-      return "Falta la URL de la imagen del producto.";
+      return "Es necesaria una URL para la imagen del producto.";
     }
 
     if (!form.imagenDetalle.trim()) {
@@ -134,7 +142,7 @@ function ProductForm() {
         setMessage("Producto creado correctamente.");
       }
 
-      setForm(initialForm);
+
 
       setTimeout(() => {
         navigate("/");
