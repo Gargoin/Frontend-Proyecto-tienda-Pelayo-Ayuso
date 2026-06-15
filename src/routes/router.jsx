@@ -3,9 +3,11 @@ import {createBrowserRouter} from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home";
 import ProductDetailPage from "../pages/ProductDetailPage";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductForm from "../components/ProductForm";
-import Login from "../components/Login";
+
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +31,11 @@ export const router = createBrowserRouter([
         },
         {
             path: "login",
-            element: <Login />
+            element: <LoginPage />
+        },
+        {
+            path: "register",
+            element: <RegisterPage />
         },
         {
             path: "*",

@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/authService";
 
 
 const initialForm = {
@@ -10,15 +11,15 @@ const initialForm = {
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function Login () {
+function LoginPage () {
 
     const [form, setForm] = useState(initialForm);
+    const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const isDisabled = !form.email || !form.password || loading;
+    const isDisabled = loading;
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -42,32 +43,48 @@ function Login () {
     return null;
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const validationError = validateForm();
+const handleSubmit = async (event) => {
+        event.preventDefault();
 
-    if (validationError) {
-      setError(validationError);
-      return;
+        try {
+            setError("");
+            setMessage("");
+
+            const validationError = validateForm();
+
+            if (validationError) {
+                setError(validationError);
+            return;
+            }
+
+        setError(null);
+        setLoading(true);
+
+        const userData = {   
+            email: form.email.trim(),
+            password: form.password
+        };
+
+        const data = await login (userData);
+
+        navigate("/");
+      
+        
+        setForm(initialForm);
+
+
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
     }
 
-    setError(null);
-    setLoading(true);
-
-    const user = {
-      email: form.email.trim(),
-      password: form.password,
-    };
-    console.log("epa");
-    setForm(initialForm);
-    setLoading(false);
-
-  }
-
   return (
-      
+          <main>
+      <section className="auth-section">
+        <div className="container">
     <form className="product-form container" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2>Inicia sesión</h2>
         <div className="form-group-login">
             <label htmlFor="email">Correo: </label>
             <input className="search-input" placeholder="Email" type="email" name="email" id="email" value={form.email} onChange={handleChange}/>
@@ -83,13 +100,14 @@ function Login () {
                 
             </div>
       </div>
-
+        {error && (<div className="mensaje-alerta"><p>{error}</p></div>)}
         <button type="submit" className="button" disabled={isDisabled}> {loading ? "Iniciando sesión" : "Iniciar sesión"}</button>
     </form>
-
-  );
+    </div>
+</section>
+  </main>);
 
 
 }
 
-export default Login;
+export default LoginPage;

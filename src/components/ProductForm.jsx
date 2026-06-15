@@ -169,9 +169,12 @@ function ProductForm() {
     } catch (error) {
       console.error(error);
 
+      
+
       setError(
         error?.message || "Ha ocurrido un error al guardar el producto."
       );
+
     } finally {
       setSaving(false);
     }

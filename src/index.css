@@ -82,6 +82,11 @@ p {
     gap: 1rem;
 }
 
+.botones-admin-detalle {
+    display: flex;
+    gap: 1rem;
+}
+
 
 /* MAIN, CONTAINER, HEADER, FOOTER, IMG Y OTROS COMUNES */
 
@@ -372,14 +377,14 @@ img {
 /* FORMULARIOS E INPUTS */
 
 .product-form {
-    padding: 1rem 0 2rem 0;
+    padding: 1rem 0 4rem 0;
     display: flex;
     flex-direction:column;
     gap:1.3rem;
     align-items: center;
 }
 
-.product-form h2 {
+.product-form h2 h1 {
     text-align: center;
     font-size: 2rem;
     margin: .3rem 0;
