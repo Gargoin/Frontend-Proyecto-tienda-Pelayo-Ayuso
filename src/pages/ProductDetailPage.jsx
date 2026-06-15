@@ -1,9 +1,11 @@
 import {useParams, Link, useNavigate} from "react-router-dom";
 import { getProductById, deleteProduct } from "../services/productService";
-import {useState, useEffect} from "react";  
+import {useState, useEffect} from "react";
+import { useAuth } from "../hooks/useAuth";  
 
 function ProductDetailPage () {
-    
+
+    const {user} = useAuth();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
@@ -111,10 +113,11 @@ function ProductDetailPage () {
                     <p>{product.descripcion}</p>
                     {product.stock < 3 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
                     <div className="botonera">
+                      {user && user.admin &&
                       <div className="botones-admin-detalle">
                         <Link className="button-crear" to={`/edit/${product._id}`}>Editar</Link>
                         <Link className="button-crear"  onClick={() => setProductToDelete(product)}>Borrar</Link>
-                      </div>
+                      </div>}
                         <Link className="button" to="/">Volver</Link>
                     </div>
 

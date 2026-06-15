@@ -1,5 +1,10 @@
 const API_URL = `${import.meta.env.VITE_API_URL}/products`;
 
+const getToken = () => {
+    const token =localStorage.getItem("token");
+    return token ? `Bearer ${token}`: null;
+}
+
 const handleResponse = async (response) => {
     const data = await response.json();
 
@@ -29,9 +34,15 @@ export const getProductById = async (id) =>  {
 
 export const createProduct = async (productData) => {
 
+    const token = getToken();
+
+    if (!token) {
+        throw new Error ("no autorizado");
+    }
+
     const response = await fetch(API_URL, {
         method: "POST",
-        headers:{"Content-Type": "application/json"},
+        headers:{"Content-Type": "application/json", Authorization: token},
         body: JSON.stringify(productData),
     });
 
@@ -41,9 +52,15 @@ export const createProduct = async (productData) => {
 
 export const updateProduct = async (productData, productId) => {
 
+    const token = getToken();
+
+    if (!token) {
+        throw new Error ("No autorizado");
+    }
+
     const response = await fetch(`${API_URL}/${productId}`, {
         method: "PUT",
-        headers:{"Content-Type": "application/json"},
+        headers:{"Content-Type": "application/json", Authorization: token},
         body: JSON.stringify(productData),
     });
 
@@ -53,8 +70,15 @@ export const updateProduct = async (productData, productId) => {
 
 export const deleteProduct = async (productId) => {
 
+    const token = getToken();
+
+    if (!token) {
+        throw new Error ("No autorizado");
+    }
+
     const response = await fetch(`${API_URL}/${productId}`, {
         method: "DELETE",
+        headers: {Authorization: token},
     });
 
     return handleResponse(response);

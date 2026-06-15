@@ -7,6 +7,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductForm from "../components/ProductForm";
+import adminLoader from "../loaders/adminLoader";
 
 
 export const router = createBrowserRouter([
@@ -19,10 +20,12 @@ export const router = createBrowserRouter([
         },
         {
             path: "new",
+            loader: adminLoader,
             element: <ProductForm />
         },
         {
             path: "edit/:id",
+            loader: adminLoader,
             element: <ProductForm />
         },
         {
@@ -30,16 +33,24 @@ export const router = createBrowserRouter([
             element: <ProductDetailPage/>
         },
         {
+            path: "*",
+            element:<NotFoundPage/>
+        }
+    ]
+
+    },
+
+    {
+        path: "/auth",
+        element: <MainLayout />,
+        children: [
+        {
             path: "login",
             element: <LoginPage />
         },
         {
             path: "register",
             element: <RegisterPage />
-        },
-        {
-            path: "*",
-            element:<NotFoundPage/>
         }
     ]
 

@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import { useAuth } from "../hooks/useAuth";
 
 
 const initialForm = {
@@ -12,7 +13,7 @@ const initialForm = {
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginPage () {
-
+    const context = useAuth();
     const [form, setForm] = useState(initialForm);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
@@ -67,8 +68,9 @@ const handleSubmit = async (event) => {
 
         const data = await login (userData);
 
+        context.login(data);
+
         navigate("/");
-      
         
         setForm(initialForm);
 

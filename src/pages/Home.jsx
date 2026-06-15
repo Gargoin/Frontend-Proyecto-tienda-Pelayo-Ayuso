@@ -23,8 +23,6 @@ function Home() {
     sortBy,
   );
 
-  
-
   useEffect(() => {
     const loadProducts = async () => {
       try {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { createProduct, updateProduct, getProductById } from "../services/productService";
+import { createProduct, updateProduct, getProductById } from "../services/productService";import { useAuth } from "../hooks/useAuth";  
 
 const initialForm = {
   nombre: "",
@@ -13,6 +13,8 @@ const initialForm = {
 };
 
 function ProductForm() {
+  
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -21,9 +23,11 @@ function ProductForm() {
   const [form, setForm] = useState(initialForm);
 
   const { id } = useParams();
-  const navigate = useNavigate();
+ 
 
   const isEdit = Boolean(id);
+
+
 
   useEffect(() => {
 
@@ -31,6 +35,8 @@ function ProductForm() {
       setForm(initialForm);
       return;
     }
+
+
 
     const loadProduct = async () => {
 
