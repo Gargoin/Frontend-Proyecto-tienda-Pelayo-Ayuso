@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { createProduct, updateProduct, getProductById } from "../services/productService";import { useAuth } from "../hooks/useAuth";  
+import { createProduct, updateProduct, getProductById } from "../services/productService";
+import { useAuth } from "../hooks/useAuth";  
 
 const initialForm = {
   nombre: "",
@@ -12,7 +13,7 @@ const initialForm = {
   categoria: "",
 };
 
-function ProductForm() {
+function ProductForm({}) {
   
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

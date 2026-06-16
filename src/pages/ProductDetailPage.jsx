@@ -111,7 +111,8 @@ function ProductDetailPage () {
                     <h1>{product.nombre}</h1>
                     <p>{product.precio} €</p>
                     <p>{product.descripcion}</p>
-                    {product.stock < 3 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
+                    {product.stock < 3 && product.stock !== 0 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
+                    {product.stock == 0 && <div className="mensaje-alerta"><p>Actualmente sin existencias.</p></div>}
                     <div className="botonera">
                       {user && user.admin &&
                       <div className="botones-admin-detalle">

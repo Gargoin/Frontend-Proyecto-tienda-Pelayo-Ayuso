@@ -151,6 +151,7 @@ img {
     gap: 1em;
 }
 
+
 .productos {
     margin: 4rem 0;
 }
@@ -192,10 +193,18 @@ img {
 }
 
 .cargando{
-
     font-weight: bold;
     text-align: center;
+}
 
+.user-name {
+    display: inline-block;
+    color: #faf8e7;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1.35rem;
+    padding: .3rem .9rem;
+    font-weight:bold;
 }
 
 /* MODAL */

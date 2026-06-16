@@ -7,11 +7,9 @@ function Navbar () {
     const navigate = useNavigate();
     const {user, logout} = useAuth();
     const handleLogout = () => {
-navigate("/");
-        logout();
-        
-
-    }
+        navigate("/");
+            logout();
+    };
 
     return (
         <nav className="navbar container">
@@ -23,7 +21,8 @@ navigate("/");
 
             {user && 
             <div className="login">
-                <Link className="button logout" onClick={handleLogout}>Logout</Link>
+                <div className="user-name">{user.name}</div>
+                <Link className="button" onClick={handleLogout}>Logout</Link>
             </div>}
             
             {!user &&
