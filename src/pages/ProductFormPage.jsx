@@ -13,7 +13,7 @@ const initialForm = {
   categoria: "",
 };
 
-function ProductForm({}) {
+function ProductFormPage({}) {
   
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -279,4 +279,4 @@ function ProductForm({}) {
   );
 }
 
-export default ProductForm;
+export default ProductFormPage;
