@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 
-import SearchBox from "../components/searchBox";
+import SearchBox from "../components/SearchBox";
 
 function ProductFilters ({categoriaSeleccionada, sortBy, onCategoryChange, onSortBy, products}) {
 

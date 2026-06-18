@@ -1,10 +1,21 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 
 import ProductForm from "../pages/ProductFormPage";
+import { getProductById } from "../services/productService";
 
-describe("", () => {
+vi.mock("../services/productService", () => ({
+  createProduct: vi.fn(),
+  updateProduct: vi.fn(),
+  getProductById: vi.fn(),
+}));
+
+describe("ProductForm", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   test("Espero que muestre el formulario para crear un producto", () => {
     render(
       <MemoryRouter>
@@ -43,14 +54,28 @@ describe("", () => {
       stock: "100",
     };
 
+    getProductById.mockResolvedValue(producto);
+
     render(
-      <MemoryRouter>
-        <ProductForm producto={producto} />
+      <MemoryRouter initialEntries={["/productos/editar/1"]}>
+        <Routes>
+          <Route path="/productos/editar/:id" element={<ProductForm />} />
+        </Routes>
       </MemoryRouter>,
     );
 
-    expect(
-      screen.getByDisplayValue("../src/assets/imgs/D10.png"),
-    ).toBeInTheDocument();
+    expect(getProductById).toHaveBeenCalledWith("1");
+
+    expect(screen.getByText("Cargando producto...")).toBeInTheDocument();
+
+    return screen
+      .findByDisplayValue("../src/assets/imgs/D10.png")
+      .then((input) => {
+        expect(input).toBeInTheDocument();
+        expect(
+          screen.getByText("Editando Producto editado"),
+        ).toBeInTheDocument();
+      });
   });
 });
+
