@@ -10,6 +10,7 @@ function ProductDetailPage () {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
+    const [imageZoom, setImageZoom] = useState(false);
 
     const {id} = useParams();
     const navigate = useNavigate();
@@ -64,6 +65,28 @@ function ProductDetailPage () {
       }
      
     }
+    useEffect(() => {
+
+  const handleEscape = (event) => {
+
+    if (event.key === "Escape") {
+      setImageZoom(false);
+    }
+
+  };
+
+
+  if (imageZoom) {
+    document.addEventListener("keydown", handleEscape);
+  }
+
+
+  return () => {
+    document.removeEventListener("keydown", handleEscape);
+  };
+
+
+}, [imageZoom]);
 
     useEffect(() => {
             if (!message) {
@@ -106,42 +129,73 @@ function ProductDetailPage () {
         <section className="detalle-producto">
           {message && (<div className="mensaje-exito container"><p>{message}</p></div>)}
             <div className="container-detalle container">
-                <img src={product.imagenDetalle} alt={product.nombre}/>
+                <img src={product.imagenDetalle} alt={product.nombre} className="detalle-image" onClick={() => setImageZoom(true)}/>
                 <div className="detalle-producto-content">
                     <h1>{product.nombre}</h1>
                     <p>{product.precio} €</p>
                     <p>{product.descripcion}</p>
+                    
                     {product.stock < 3 && product.stock !== 0 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
                     {product.stock == 0 && <div className="mensaje-alerta"><p>Actualmente sin existencias.</p></div>}
+                    
                     <div className="botonera">
                       {user && user.admin &&
-                      <div className="botones-admin-detalle">
-                        <Link className="button-crear" to={`/edit/${product._id}`}>Editar</Link>
-                        <Link className="button-crear"  onClick={() => setProductToDelete(product)}>Borrar</Link>
-                      </div>}
-                        <Link className="button" to="/">Volver</Link>
+                        <div className="botones-admin-detalle">
+                          <Link className="button-crear" to={`/edit/${product._id}`}>Editar</Link>
+                          <Link className="button-crear"  onClick={() => setProductToDelete(product)}>Borrar</Link>
+                        </div>}
+                          <Link className="button" to="/">Volver</Link>
                     </div>
 
                 </div>
             </div>
-                  {productToDelete && (
-        <div className="modal-overlay" onClick={() => setProductToDelete(null)}>
-          <div className="modal" onClick={(event) => event.stopPropagation()}>
-            <h2>Eliminar producto</h2>
 
-            <p>
-              ¿Desea eliminar <strong>{productToDelete.nombre}</strong>?
-            </p>
+            {productToDelete && (
+              <div className="modal-overlay" onClick={() => setProductToDelete(null)}>
+              <div className="modal" onClick={(event) => event.stopPropagation()}>
+              <h2>Eliminar producto</h2>
 
-            <div className="modal-actions">
+              <p>
+                ¿Desea eliminar <strong>{productToDelete.nombre}</strong>?
+              </p>
 
-              <button disabled ={saving} className="button-modal secondary" type="button" onClick={() => setProductToDelete(null)}>Cancelar</button>
-              <button disabled={saving} className="button-modal danger" type="button" onClick={() => handleDelete(productToDelete._id)}>{saving ? "Eliminando..." : "Eliminar"}</button>
+              <div className="modal-actions">
 
-            </div>
+                <button disabled ={saving} className="button-modal secondary" type="button" onClick={() => setProductToDelete(null)}>Cancelar</button>
+                <button disabled={saving} className="button-modal danger" type="button" onClick={() => handleDelete(productToDelete._id)}>{saving ? "Eliminando..." : "Eliminar"}</button>
+
+              </div>
           </div>
         </div>
       )}
+
+      {imageZoom && (
+  <div 
+    className="image-overlay"
+    onClick={() => setImageZoom(false)}
+  >
+
+    <div 
+      className="image-overlay-content"
+      onClick={(event) => event.stopPropagation()}
+    >
+
+      <img 
+        src={product.imagenDetalle}
+        alt={product.nombre}
+      />
+
+      <button 
+        className="button-modal danger image-close"
+        onClick={() => setImageZoom(false)}
+      >
+        X
+      </button>
+
+    </div>
+
+  </div>
+)}
         </section> 
         </main>
     );
