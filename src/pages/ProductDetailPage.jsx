@@ -142,7 +142,7 @@ function ProductDetailPage () {
                 <p>{product.descripcion}</p>
                     
                 {product.stock < 3 && product.stock !== 0 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
-                {product.stock == 0 && <div className="mensaje-alerta"><p>Actualmente sin existencias.</p></div>}
+                {product.stock == 0 && <div className="mensaje-alerta"><p>Producto agotado.</p></div>}
                     
                 <div className="botonera">
                   {user && user.admin &&
@@ -188,7 +188,7 @@ function ProductDetailPage () {
 )}
         </section> 
   </main>
-  
+
     );
  }
 
