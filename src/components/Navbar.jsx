@@ -85,7 +85,7 @@ function Navbar () {
                         {user.name}
                     </div>
 
-                    <button className="button" onClick={handleLogout}>
+                    <button className="button logout" onClick={handleLogout}>
                         Logout
                     </button>
 

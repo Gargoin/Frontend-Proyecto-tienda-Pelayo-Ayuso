@@ -3,6 +3,7 @@ function useFilteredSortedProducts (products, categoriaSeleccionada, sortBy) {
     const productosFiltrados = products.filter((product) => categoriaSeleccionada == "Todas las categorías" || product.categoria == categoriaSeleccionada );
 
     const sortedProducts = [...productosFiltrados].sort((a,b) => {
+        
         if(sortBy == "az") {
             if (a.nombre < b.nombre) return -1;
             if (a.nombre > b.nombre) return 1;
@@ -15,6 +16,8 @@ function useFilteredSortedProducts (products, categoriaSeleccionada, sortBy) {
         if (sortBy == "mas caro"){
             return b.precio - a.precio;
         }
+
+        return new Date(b.createdAt) - new Date(a.createdAt);
 
     })
 

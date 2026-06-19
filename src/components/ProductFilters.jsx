@@ -18,10 +18,11 @@ function ProductFilters ({categoriaSeleccionada, sortBy, onCategoryChange, onSor
                 </select>
 
                 <select className="search-input" value={sortBy} onChange={(event) => onSortBy(event.target.value) }>
-                    <option value="default">Orden por defecto</option>
+                    <option value="default">Lo más nuevo</option>
                     <option value="az">A-Z</option>
                     <option value="mas barato">Más barato</option>
                     <option value="mas caro">Más caro</option>
+                    
                 </select>
             </div>
     )
