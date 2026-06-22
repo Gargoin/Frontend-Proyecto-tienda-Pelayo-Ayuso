@@ -60,11 +60,11 @@ function Home() {
 
       setProducts(data);
 
-    } else {
+      } else {
 
-      setProducts(prev => [...prev, ...data]);
+        setProducts(prev => [...prev, ...data]);
 
-    } 
+      } 
     
       if(data.length < 6){
         setHasMore(false);
