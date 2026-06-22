@@ -26,7 +26,7 @@ export const getProducts = async (page = 1, limit = 6, sortBy = "createdAt", ord
         categoria,
     })
 
-    const response = await fetch(`${API_URL}?${queryParamas.toString()}`);
+    const response = await fetch(`${API_URL}?${queryParams.toString()}`);
 
     return handleResponse(response);
 

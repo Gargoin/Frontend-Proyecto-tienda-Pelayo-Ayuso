@@ -153,6 +153,13 @@ main h2 {
     background-color:var(--primary);
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
 
 /* GRUPOS FLEX */
 
@@ -199,6 +206,10 @@ main h2 {
 .cargando {
     font-weight:bold;
     text-align:center;
+}
+
+.final {
+    margin-top: 3rem;
 }
 
 

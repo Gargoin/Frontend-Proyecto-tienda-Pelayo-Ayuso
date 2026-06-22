@@ -12,10 +12,15 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [allProducts, setAllProducts] = useState([]);
+  
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
-    "Todas las categorías",
-  );
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState( "Todas las categorías");
   const [sortBy, setSortBy] = useState("default");
 
   useEffect(() => {
@@ -36,36 +41,80 @@ function Home() {
 
   loadAllProducts();
 
-}, []);
+  }, []);
 
 
   useEffect(() => {
+
   const loadProducts = async () => {
+
     try {
 
       const field = sortBy === "mas barato" || sortBy === "mas caro" ? "precio" : sortBy === "default" ? "createdAt" : "nombre";
       const order = sortBy === "az" || sortBy === "mas barato" || sortBy === "default" ? "asc" : "desc";
+      
+      const data = await getProducts( page, 6, field, order, categoriaSeleccionada );
 
-      const data = await getProducts(
-        1,
-        6,
-        field,
-        order,
-        categoriaSeleccionada
-      );
+
+      if(page === 1){
 
       setProducts(data);
 
+    } else {
+
+      setProducts(prev => [...prev, ...data]);
+
+    } 
+    
+      if(data.length < 6){
+        setHasMore(false);
+      }
+
     } catch(error) {
+
       setError("No se pudieron obtener los productos");
+
     } finally {
+
       setLoading(false);
+      setLoadingMore(false);
+
     }
+
   };
+
 
   loadProducts();
 
-}, [sortBy, categoriaSeleccionada]);
+}, [sortBy, categoriaSeleccionada, page]);
+
+useEffect(() => {
+
+  const handleScroll = () => {
+
+    const scrollLlegandoAlFinal = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 300;
+
+    if( scrollLlegandoAlFinal && hasMore && !loadingMore) {
+
+      setLoadingMore(true);
+      setPage(prev => prev + 1);
+
+    }
+
+  };
+
+  window.addEventListener( "scroll", handleScroll);
+
+  return () => { window.removeEventListener( "scroll", handleScroll);};
+
+
+}, [hasMore, loadingMore]);
+
+  useEffect(() => {
+    setPage(1);
+    setHasMore(true);
+
+  }, [sortBy, categoriaSeleccionada]);
 
   
   if (loading) {
@@ -118,6 +167,8 @@ function Home() {
             products={allProducts}
           />
           <ProductList products={products} />
+          {loadingMore && (<p className="cargando final">Cargando más productos...</p>)}
+          {!hasMore && (<p className="cargando final">Has llegado al final</p>)}
         </div>
       </section>
     </main>
