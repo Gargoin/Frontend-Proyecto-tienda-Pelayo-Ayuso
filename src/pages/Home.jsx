@@ -43,23 +43,12 @@ function Home() {
   const loadProducts = async () => {
     try {
 
-      const field =
-        sortBy === "mas barato" || sortBy === "mas caro"
-          ? "precio"
-          : sortBy === "default"
-          ? "createdAt"
-          : "nombre";
-
-
-      const order =
-        sortBy === "az" ||
-        sortBy === "mas barato" ||
-        sortBy === "default"
-          ? "asc"
-          : "desc";
-
+      const field = sortBy === "mas barato" || sortBy === "mas caro" ? "precio" : sortBy === "default" ? "createdAt" : "nombre";
+      const order = sortBy === "az" || sortBy === "mas barato" || sortBy === "default" ? "asc" : "desc";
 
       const data = await getProducts(
+        1,
+        6,
         field,
         order,
         categoriaSeleccionada

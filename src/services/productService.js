@@ -16,9 +16,17 @@ const handleResponse = async (response) => {
     
 };
 
-export const getProducts = async (sortBy = "createdAt", order ="asc", categoria ="Todas las categorías") => {
+export const getProducts = async (page = 1, limit = 6, sortBy = "createdAt", order ="asc", categoria ="Todas las categorías") => {
 
-    const response = await fetch(`${API_URL}?sortBy=${sortBy}&order=${order}&categoria=${categoria}`);
+    const queryParams = new URLSearchParams({
+        page,
+        limit,
+        sortBy,
+        order,
+        categoria,
+    })
+
+    const response = await fetch(`${API_URL}?${queryParamas.toString()}`);
 
     return handleResponse(response);
 
