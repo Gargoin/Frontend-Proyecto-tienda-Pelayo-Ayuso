@@ -16,9 +16,9 @@ const handleResponse = async (response) => {
     
 };
 
-export const getProducts = async () => {
+export const getProducts = async (sortBy = "createdAt", order ="asc", categoria ="Todas las categorías") => {
 
-    const response = await fetch(API_URL);
+    const response = await fetch(`${API_URL}?sortBy=${sortBy}&order=${order}&categoria=${categoria}`);
 
     return handleResponse(response);
 

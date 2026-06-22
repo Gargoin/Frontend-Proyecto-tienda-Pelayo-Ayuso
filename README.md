@@ -1,32 +1,201 @@
 # Frontend Proyecto tienda Pelayo Ayuso
 
+Aplicación web desarrollada con React para consultar, buscar y administrar productos y series consumiendo una API REST.
 Proyecto final del Bootcamp de Neoland Web Development.
 
 
-## Descripción
+## Características
 
-Aplicacion web para gestionar un catálogo de productos.
+- Listado de productos.
+- Búsqueda en tiempo real.
+- Filtros y ordenamiento.
+- Vista de detalle.
+- Botones para la administración
+- Crear productos.
+- Editar productos.
+- Eliminar productos.
+- Registro de usuarios.
+- Inicio de sesión con JWT.
+- Rutas protegidas mediante autenticación.
+- Testing básico con Vitest.
+
+---
 
 
 ## Tecnologías
 
 - React
 - Vite
-- CSS
-- JavaScript
+- React Router DOM
+- Context API
+- Tailwind CSS
+- Fetch API
+- Vitest
+- Testing Library
 
+---
+
+
+## Instalación
 
 ## Clonar el repositorio
 
-```shell
-git clone <url_repo>
-git switch dev
+```bash
+git clone <url-del-repositorio>
 ```
 
+Ingresar al proyecto:
 
-## Cómo ejecutar el proyecto
+```bash
+cd Frontend-Proyecto-tienda-Pelayo-Ayuso
+```
 
-```shell
+Instalar dependencias:
+
+```bash
 npm install
+```
+
+---
+
+
+## Variables de entorno
+
+Crear un archivo `.env` en la raíz del proyecto utilizando como referencia el archivo `.env.example`.
+
+### .env.example
+
+```env
+VITE_API_URL=
+```
+
+### Ejemplo local
+
+```env
+VITE_API_URL=http://localhost:3000/api
+```
+
+### Ejemplo producción
+
+```env
+VITE_API_URL=https://mi-api.onrender.com/api
+```
+
+---
+
+
+## Ejecutar en desarrollo
+
+```bash
 npm run dev
 ```
+
+La aplicación estará disponible en:
+
+```txt
+http://localhost:5173
+```
+
+---
+
+
+## Ejecutar tests
+
+```bash
+npm test
+```
+
+---
+
+## Generar build de producción
+
+```bash
+npm run build
+```
+
+Los archivos generados se encontrarán en:
+
+```txt
+dist/
+```
+
+---
+
+
+## Backend
+
+Este proyecto consume una API REST desarrollada con:
+
+- Node.js
+- Express
+- MongoDB Atlas
+- JWT
+
+La URL del backend se configura mediante:
+
+```env
+VITE_API_URL
+```
+
+---
+
+
+## Estructura del proyecto
+
+```txt
+src/
+│
+├── components/
+├── context/
+├── hooks/
+├── layouts/
+├── pages/
+├── routes/
+├── services/
+├── tests/
+│
+├── App.jsx
+└── main.jsx
+```
+
+---
+
+
+## Autenticación
+
+La aplicación utiliza JWT.
+
+Al iniciar sesión se almacenan:
+
+```txt
+token
+user
+```
+
+en el Local Storage del navegador.
+
+---
+
+
+## Deploy
+
+Frontend desplegado en:
+
+```txt
+https://tu-proyecto.netlify.app
+```
+
+Backend desplegado en:
+
+```txt
+https://tu-api.onrender.com
+```
+
+---
+
+
+## Autor
+
+Proyecto final del curso Full Stack de Neoland.
+
+Autor: Pelayo Ayuso Plaza

@@ -5,38 +5,78 @@ import { getProducts } from "../services/productService";
 import FeaturedProducts from "../components/FeaturedProducts";
 import ProductList from "../components/ProductList";
 import ProductFilters from "../components/ProductFilters";
-import useFilteredSortedProducts from "../hooks/useFilteredSortedProducts";
+
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
 
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(
     "Todas las categorías",
   );
   const [sortBy, setSortBy] = useState("default");
 
-  const { sortedProducts } = useFilteredSortedProducts(
-    products,
-    categoriaSeleccionada,
-    sortBy,
-  );
+  useEffect(() => {
+  const loadAllProducts = async () => {
+    try {
+      const data = await getProducts(
+        "createdAt",
+        "desc",
+        "Todas las categorías"
+      );
+
+      setAllProducts(data);
+
+    } catch(error) {
+      console.log(error);
+    }
+  };
+
+  loadAllProducts();
+
+}, []);
+
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
+  const loadProducts = async () => {
+    try {
 
-      } catch (error) {
-        setError("No se pudieron obtener los productos");
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadProducts();
-  }, []);
+      const field =
+        sortBy === "mas barato" || sortBy === "mas caro"
+          ? "precio"
+          : sortBy === "default"
+          ? "createdAt"
+          : "nombre";
+
+
+      const order =
+        sortBy === "az" ||
+        sortBy === "mas barato" ||
+        sortBy === "default"
+          ? "asc"
+          : "desc";
+
+
+      const data = await getProducts(
+        field,
+        order,
+        categoriaSeleccionada
+      );
+
+      setProducts(data);
+
+    } catch(error) {
+      setError("No se pudieron obtener los productos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  loadProducts();
+
+}, [sortBy, categoriaSeleccionada]);
 
   
   if (loading) {
@@ -86,9 +126,9 @@ function Home() {
             sortBy={sortBy}
             onCategoryChange={setCategoriaSeleccionada}
             onSortBy={setSortBy}
-            products={products}
+            products={allProducts}
           />
-          <ProductList products={sortedProducts} />
+          <ProductList products={products} />
         </div>
       </section>
     </main>
