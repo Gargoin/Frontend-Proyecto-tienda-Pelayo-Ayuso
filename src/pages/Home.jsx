@@ -25,7 +25,7 @@ function Home() {
 useEffect(() => {
   const loadAllProducts = async () => {
     try {
-      const data = await getProducts( "createdAt", "desc", "Todas las categorías");
+      const data = await getProducts(1, 9999, "createdAt", "desc", "Todas las categorías");
 
       setAllProducts(data);
 
