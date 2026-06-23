@@ -11,7 +11,7 @@ function ProductCard({product}) {
             <div className="product-card-content">
                 <h3>{product.nombre}</h3>
                 <p>{product.precio} €</p>
-                <p>{product.descripcion}</p>
+                
             </div>
         </article>
     )
