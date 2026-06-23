@@ -13,24 +13,19 @@ function Home() {
   const [error, setError] = useState("");
   const [allProducts, setAllProducts] = useState([]);
   
+  const [queryKey, setQueryKey] = useState(0);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
 
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState( "Todas las categorías");
   const [sortBy, setSortBy] = useState("default");
 
-  useEffect(() => {
+
+useEffect(() => {
   const loadAllProducts = async () => {
     try {
-      const data = await getProducts(
-        "createdAt",
-        "desc",
-        "Todas las categorías"
-      );
+      const data = await getProducts( "createdAt", "desc", "Todas las categorías");
 
       setAllProducts(data);
 
@@ -41,34 +36,49 @@ function Home() {
 
   loadAllProducts();
 
-  }, []);
+}, []);
 
 
-  useEffect(() => {
+useEffect(() => {
+
+  setPage(1);
+  setProducts([]);
+  setHasMore(true);
+
+  setQueryKey(prev => prev + 1);
+
+}, [sortBy, categoriaSeleccionada]);
+
+
+useEffect(() => {
 
   const loadProducts = async () => {
+
+
+    if (isLoading ) return;
+
+
+    setIsLoading(true);
 
     try {
 
       const field = sortBy === "mas barato" || sortBy === "mas caro" ? "precio" : sortBy === "default" ? "createdAt" : "nombre";
+
       const order = sortBy === "az" || sortBy === "mas barato" || sortBy === "default" ? "asc" : "desc";
-      
+
       const data = await getProducts( page, 6, field, order, categoriaSeleccionada );
 
+        setProducts(prev => {
 
-      if(page === 1){
+          if(page === 1){
+            return data;
+          }
 
-      setProducts(data);
+          return [...prev, ...data];
 
-      } else {
+        });
 
-        setProducts(prev => [...prev, ...data]);
-
-      } 
-    
-      if(data.length < 6){
-        setHasMore(false);
-      }
+        setHasMore(data.length === 6);
 
     } catch(error) {
 
@@ -77,44 +87,39 @@ function Home() {
     } finally {
 
       setLoading(false);
-      setLoadingMore(false);
+      setIsLoading(false);
 
     }
 
   };
 
+    loadProducts();
 
-  loadProducts();
+}, [page, queryKey]);
 
-}, [sortBy, categoriaSeleccionada, page]);
 
 useEffect(() => {
 
   const handleScroll = () => {
 
-    const scrollLlegandoAlFinal = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 300;
+    const final =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 300;
 
-    if( scrollLlegandoAlFinal && hasMore && !loadingMore) {
+    if(final && hasMore && !isLoading){
 
-      setLoadingMore(true);
       setPage(prev => prev + 1);
 
     }
 
   };
 
-  window.addEventListener( "scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll);
 
-  return () => { window.removeEventListener( "scroll", handleScroll);};
+  return () => {window.removeEventListener("scroll", handleScroll);};
 
+}, [hasMore, isLoading]);
 
-}, [hasMore, loadingMore]);
-
-  useEffect(() => {
-    setPage(1);
-    setHasMore(true);
-
-  }, [sortBy, categoriaSeleccionada]);
 
   
   if (loading) {
@@ -167,7 +172,7 @@ useEffect(() => {
             products={allProducts}
           />
           <ProductList products={products} />
-          {loadingMore && (<p className="cargando final">Cargando más productos...</p>)}
+          {isLoading && page > 1 && (<p className="cargando final">Cargando más productos...</p>)}
           {!hasMore && (<p className="cargando final">Has llegado al final</p>)}
         </div>
       </section>
