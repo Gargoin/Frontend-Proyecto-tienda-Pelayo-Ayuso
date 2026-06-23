@@ -62,7 +62,7 @@ useEffect(() => {
 
       const field = sortBy === "mas barato" || sortBy === "mas caro" ? "precio" : sortBy === "default" ? "createdAt" : "nombre";
 
-      const order = sortBy === "az" || sortBy === "mas barato" || sortBy === "default" ? "asc" : "desc";
+      const order = sortBy === "az" || sortBy === "mas barato" ? "asc" : "desc";
 
       const data = await getProducts( page, 6, field, order, categoriaSeleccionada );
 
@@ -155,7 +155,7 @@ useEffect(() => {
       <section className="producto-destacado">
         <div className="container">
           <h2>Producto destacado:</h2>
-          <FeaturedProducts />
+          <FeaturedProducts/>
         </div>
       </section>
 
