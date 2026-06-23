@@ -92,7 +92,7 @@ function RegisterPage() {
         setMessage(data.message || "Usuario registrado correctamente");
 
         setTimeout(() => {
-            navigate("/login");
+            navigate("/auth/login");
             setLoading(false);
         }, 2000);
         
