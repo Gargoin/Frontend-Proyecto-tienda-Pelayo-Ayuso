@@ -322,12 +322,12 @@ main h2 {
 
 .categoria.Camiseta {
   font-weight: bold;
-  color: #fcff43;
+  color: #ff78d2;
 }
 
 .categoria.Print {
   font-weight: bold;
-  color:  #3de5ff;
+  color:  #32e6e2;
 }
 
 
@@ -478,14 +478,14 @@ main h2 {
 
 .product-card.Camiseta {
 
-    border:solid var(--border) #fcff43;
+    border:solid var(--border) #ff78d2;
 
 }
 
 
 .product-card.Print {
 
-    border:solid var(--border) #3de5ff;
+    border:solid var(--border) #32e6e2;
 
 }
 
