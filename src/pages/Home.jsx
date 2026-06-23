@@ -155,7 +155,7 @@ useEffect(() => {
       <section className="producto-destacado">
         <div className="container">
           <h2>Producto destacado:</h2>
-          <FeaturedProducts products={products} />
+          <FeaturedProducts />
         </div>
       </section>
 

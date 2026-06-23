@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getProducts } from "../services/productService";
 import FeaturedProduct from "./FeaturedProduct";
 
-function FeaturedProducts({ products }) {
+function FeaturedProducts() {
 
-    const [productoAleatorio] = useState(() => {
-        if (!products || products.length === 0) return null;
+    const [productoAleatorio, setProductoAleatorio] = useState(null);
 
-        const indiceAleatorio = Math.floor(Math.random() * products.length);
-        return products[indiceAleatorio];
-    });
+    useEffect(() => {
+
+        const loadProducts = async () => {
+            try {
+                const data = await getProducts(
+                    1,
+                    20,
+                    "createdAt",
+                    "desc",
+                    "Todas las categorías"
+                );
+
+                if (data.length) {
+                    const randomIndex = Math.floor(
+                        Math.random() * data.length
+                    );
+
+                    setProductoAleatorio(data[randomIndex]);
+                }
+
+            } catch(error) {
+                console.log(error);
+            }
+        };
+
+        loadProducts();
+
+    }, []);
+
 
     if (!productoAleatorio) return null;
 
