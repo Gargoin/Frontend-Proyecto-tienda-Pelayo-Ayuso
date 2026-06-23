@@ -107,6 +107,12 @@ npm test
 
 ---
 
+## vite.config.js
+
+```js
+
+```
+
 ## Generar build de producción
 
 ```bash
@@ -143,18 +149,25 @@ VITE_API_URL
 ## Estructura del proyecto
 
 ```txt
+public/
+└──imgs/
+
 src/
 │
+├── assets/
 ├── components/
 ├── context/
 ├── hooks/
 ├── layouts/
+├── loaders/
 ├── pages/
 ├── routes/
 ├── services/
 ├── tests/
 │
 ├── App.jsx
+├── index.css
+├── index.css
 └── main.jsx
 ```
 
