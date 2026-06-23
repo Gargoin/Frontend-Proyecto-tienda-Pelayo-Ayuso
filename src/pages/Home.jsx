@@ -42,10 +42,7 @@ useEffect(() => {
 useEffect(() => {
 
   setPage(1);
-  setProducts([]);
   setHasMore(true);
-  setLoading(true);
-
   setQueryKey(prev => prev + 1);
 
 }, [sortBy, categoriaSeleccionada]);
