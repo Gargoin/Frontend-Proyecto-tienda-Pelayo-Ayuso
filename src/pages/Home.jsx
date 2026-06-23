@@ -18,7 +18,7 @@ function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState( "Todas las categorías");
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas las categorías");
   const [sortBy, setSortBy] = useState("default");
 
 
