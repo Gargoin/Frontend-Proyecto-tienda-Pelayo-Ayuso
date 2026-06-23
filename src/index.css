@@ -320,6 +320,16 @@ main h2 {
 
 }
 
+.categoria.Camiseta {
+  font-weight: bold;
+  color: #fcff43;
+}
+
+.categoria.Print {
+  font-weight: bold;
+  color:  #3de5ff;
+}
+
 
 
 /* =========================
@@ -473,16 +483,9 @@ main h2 {
 }
 
 
-.product-card.Parche {
-
-    border:solid var(--border) #f0a059;
-
-}
-
-
 .product-card.Print {
 
-    border:solid var(--border) #4989ba;
+    border:solid var(--border) #3de5ff;
 
 }
 
