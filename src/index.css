@@ -179,6 +179,7 @@ main h2 {
     display:flex;
     gap:1rem;
     margin-bottom:3rem;
+    flex-wrap: wrap;
 }
 
 .solo {
@@ -507,7 +508,7 @@ main h2 {
 .container-detalle {
     display:flex;
     flex-direction:column;
-    align-items:center;
+    
 }
 
 .container-detalle img {

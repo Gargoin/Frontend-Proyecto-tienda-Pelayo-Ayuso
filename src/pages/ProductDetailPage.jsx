@@ -210,14 +210,14 @@ const validateCart = () => {
               <>
               <div className="selectores-producto">
                 <div className="form-group-selectores">
-                  <label>Cantidad</label>
-                  <input className="search-input" type="number" min="1" step="1" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                  <label htmlFor="cantidad">Cantidad</label>
+                  <input className="search-input" type="number" min="1" step="1"id="cantidad" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
                 </div>
 
             {needsSize && (
                   <div className="form-group-selectores talla">
-                    <label>Talla</label>
-                    <select className="search-input" value={size} onChange={(e) => setSize(e.target.value)}>
+                    <label htmlFor="talla">Talla</label>
+                    <select className="search-input" id="talla" value={size} onChange={(e) => setSize(e.target.value)}>
                       <option value="">Selecciona talla</option>
                       <option value="XS">XS</option>
                       <option value="S">S</option>

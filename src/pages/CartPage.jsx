@@ -202,7 +202,7 @@ function CartPage() {
           </div>
 
           <div className="botonera solo">
-            <button className="button" disabled={updating} onClick={()=>setConfirmAction({ type:"clearCart" })} > Vaciar carrito </button>
+            <button className="button logout" disabled={updating} onClick={()=>setConfirmAction({ type:"clearCart" })} > Vaciar carrito </button>
           </div>
          
           <div className="carrito-total">
