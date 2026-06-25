@@ -68,36 +68,42 @@ function ProductDetailPage() {
   const needsSize = product?.categoria === "Camiseta";
   const outOfStock = product?.stock === 0;
 
+const validateCart = () => {
+  const qtyNumber = Number(quantity);
+
+  if (!quantity || quantity === "") {
+    return "Indica la cantidad.";
+  }
+
+  if (!Number.isInteger(qtyNumber)) {
+    return "La cantidad debe ser un número entero.";
+  }
+
+  if (qtyNumber <= 0) {
+    return "La cantidad debe ser mayor que 0.";
+  }
+
+  return null;
+};
   
   const handleCart = async () => {
+    
     if (!product) return;
+
+     const validationError = validateCart();
+
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
 
     setError("");
 
-    const qty = Number(quantity);
-
-    if (!qty || qty < 1) {
-      setError("Cantidad mínima 1");
-      return;
-    }
-
-    if (qty > product.stock) {
-      setError("No hay stock suficiente");
-      return;
-    }
-
-    if (needsSize && !size) {
-      setError("Selecciona una talla");
-      return;
-    }
-
+    
     try {
       setSaving(true);
 
-      const payload = {
-        cantidad: qty,
-        talla: needsSize ? size : undefined,
-      };
+      const payload = { cantidad: Number(quantity), talla: needsSize ? size : undefined,};
 
       if (cartItemId) {
         await updateCartItem(cartItemId, payload);
@@ -208,7 +214,7 @@ function ProductDetailPage() {
               <div className="selectores-producto">
                 <div className="form-group-selectores">
                   <label>Cantidad</label>
-                  <input className="search-input" type="number" min="1" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                  <input className="search-input" type="number" min="1" step="1" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
                 </div>
 
             {needsSize && (

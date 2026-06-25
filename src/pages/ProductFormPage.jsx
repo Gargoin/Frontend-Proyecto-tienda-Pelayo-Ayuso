@@ -115,6 +115,10 @@ function ProductFormPage({}) {
       return "Indica el stock del producto.";
     }
 
+    if (!Number.isInteger(Number(form.stock))) {
+      return "El stock debe ser un número entero.";
+    }
+
     if (Number(form.stock) < 0) {
       return "El stock no puede ser negativo.";
     }
@@ -237,7 +241,7 @@ function ProductFormPage({}) {
 
           <div>
             <label htmlFor="stock">Stock:</label>
-            <input className="search-input" type="number" placeholder="Stock del producto" id="stock" name="stock" value={form.stock} onChange={handleChange}/>
+            <input className="search-input" type="number" step="1" placeholder="Stock del producto" id="stock" name="stock" value={form.stock} onChange={handleChange}/>
           </div>
         </div>
 
