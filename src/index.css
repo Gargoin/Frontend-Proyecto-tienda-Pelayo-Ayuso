@@ -363,8 +363,8 @@ main h2 {
     position:absolute;
     top:-8px;
     right:-10px;
-    background:red;
-    color:white;
+    background:var(--primary);
+    color: var( --text);
     width:18px;
     height:18px;
     border-radius:50%;
