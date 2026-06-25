@@ -14,6 +14,7 @@ function CartPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [updating, setUpdating] = useState(false);
+  const formatPrice = (value) => { return Number(value.toFixed(2)).toString();};
 
   const [confirmAction, setConfirmAction] = useState(null);
 
@@ -184,7 +185,7 @@ function CartPage() {
 
                   <p>Cantidad: <strong>{item.cantidad}</strong></p>
 
-                  <p>Precio: <strong>{(item.producto.precio * item.cantidad).toFixed(2)} € </strong></p>
+                  <p>Precio: <strong>{formatPrice(item.producto.precio * item.cantidad)} €</strong></p>
 
                 </div>
 
@@ -205,7 +206,7 @@ function CartPage() {
           </div>
          
           <div className="carrito-total">
-            <h4>Total de tu compra:<strong className="total-verde"> {total.toFixed(2)} €</strong></h4><button  className="button" onClick={()=>navigate("/")}>Seguir comprando</button>
+            <h4>Total de tu compra:<strong className="total-verde"> {formatPrice(total)} €</strong></h4><button  className="button" onClick={()=>navigate("/")}>Seguir comprando</button>
           </div>
 
 
