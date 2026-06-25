@@ -95,9 +95,9 @@ return (
 
 
         {user && <div className="login">
-
-                    <div className="cart-button" onClick={()=>navigate("/cart")}> <ShoppingCartIcon className="cart-icon"/> {cartCount > 0 && ( <span className="cart-count"> {cartCount} </span>)}</div>
+                   
                     <div className={user?.admin ? "user-name-admin" : "user-name"}>{user.name}</div>
+                     <div className="cart-button" onClick={()=>navigate("/cart")}> <ShoppingCartIcon className="cart-icon"/> {cartCount > 0 && ( <span className="cart-count"> {cartCount} </span>)}</div>
 
                     <button className="button logout" onClick={handleLogout}>Logout</button>
 
