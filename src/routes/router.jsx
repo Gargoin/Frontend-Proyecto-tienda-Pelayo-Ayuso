@@ -7,7 +7,9 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ProductFormPage from "../pages/ProductFormPage";
+import CartPage from "../pages/CartPage";
 import adminLoader from "../loaders/adminLoader";
+import userLoader from "../loaders/userLoader";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +33,11 @@ export const router = createBrowserRouter([
       {
         path: "productos/:id",
         element: <ProductDetailPage />,
+      },
+      {
+        path: "cart",
+        loader: userLoader,
+        element: <CartPage />,
       },
       {
         path: "*",

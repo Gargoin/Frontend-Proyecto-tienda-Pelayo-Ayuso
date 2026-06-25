@@ -1,106 +1,140 @@
-import {useParams, Link, useNavigate} from "react-router-dom";
-import { getProductById, deleteProduct } from "../services/productService";
-import {useState, useEffect} from "react";
-import { useAuth } from "../hooks/useAuth";  
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { getProductById, deleteProduct,} from "../services/productService";
+import { getCart, updateCartItem, createCartItem,} from "../services/cartService";
+import { useState, useEffect } from "react";
+import { useAuth } from "../hooks/useAuth";
 
-function ProductDetailPage () {
+function ProductDetailPage() {
+  const { user } = useAuth();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const {user} = useAuth();
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [saving, setSaving] = useState(false);
-    const [error, setError] = useState("");
-    const [imageZoom, setImageZoom] = useState(false);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-    const {id} = useParams();
-    const navigate = useNavigate();
-    
-    const [productToDelete, setProductToDelete] = useState(null);
-    const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
-    useEffect(() => {
+  const [imageZoom, setImageZoom] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
-        const loadProduct = async () => {
+  const [quantity, setQuantity] = useState("1");
+  const [size, setSize] = useState("");
+  const [cartItemId, setCartItemId] = useState(null);
 
-          try {
-            
-            const data = await getProductById(id);
-            setProduct(data);
-
-          } catch (error) {
-
-            setError (error.message);
-            
-          } finally {
-
-            setLoading(false);
-
-          };
-
-        };
-
-        loadProduct();
-
-
-    }, [id])
-
-
-
-    const handleDelete = async (id) => {
-      
+ 
+  useEffect(() => {
+    const loadProduct = async () => {
       try {
-        setSaving(true);
-
-        await deleteProduct(id);
-        const elemento = document.querySelector('.container-detalle.container');
-        setProductToDelete(null);
-        setMessage("Producto eliminado correctamente");
-        elemento.style.display = 'none';
-
-      }catch (error) {
-
-        setError(error.message);
+        setLoading(true);
+        const data = await getProductById(id);
+        setProduct(data);
+      } catch (err) {
+        setError(err.message);
       } finally {
-        setSaving(false);
+        setLoading(false);
       }
-     
-    }
-
-    useEffect(() => {
-
-      const handleEscape = (event) => {
-
-        if (event.key === "Escape") {
-          setImageZoom(false);
-        }
-
-      };
-
-
-    if (imageZoom) {
-      document.addEventListener("keydown", handleEscape);
-    }
-
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
     };
 
-}, [imageZoom]);
+    loadProduct();
+  }, [id]);
 
+  
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("itemId");
 
-    useEffect(() => {
-            if (!message) {
-            return;
-            }
+    if (!itemId) return;
 
-            setTimeout(() => {
-                setMessage("");
-                navigate("/");
-            }, 2000);
-        }, [message]);
+    const loadCartItem = async () => {
+      try {
+        const cart = await getCart();
 
+        const item = cart.items.find((i) => i._id === itemId);
+        if (!item) return;
 
+        setCartItemId(item._id);
+        setQuantity(String(item.cantidad));
+        setSize(item.talla || "");
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    loadCartItem();
+  }, []);
+
+  const needsSize = product?.categoria === "Camiseta";
+  const outOfStock = product?.stock === 0;
+
+  
+  const handleCart = async () => {
+    if (!product) return;
+
+    setError("");
+
+    const qty = Number(quantity);
+
+    if (!qty || qty < 1) {
+      setError("Cantidad mínima 1");
+      return;
+    }
+
+    if (qty > product.stock) {
+      setError("No hay stock suficiente");
+      return;
+    }
+
+    if (needsSize && !size) {
+      setError("Selecciona una talla");
+      return;
+    }
+
+    try {
+      setSaving(true);
+
+      const payload = {
+        cantidad: qty,
+        talla: needsSize ? size : undefined,
+      };
+
+      if (cartItemId) {
+        await updateCartItem(cartItemId, payload);
+        setMessage("Carrito actualizado");
+      } else {
+        await createCartItem({
+          producto: product._id,
+          ...payload,
+        });
+        window.dispatchEvent(new Event("cartUpdated"));
+        setMessage("Añadido al carrito");
+      }
+
+      setTimeout(() => navigate("/cart"), 600);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  
+  const handleDelete = async (productId) => {
+    try {
+      setSaving(true);
+      await deleteProduct(productId);
+      setMessage("Producto eliminado correctamente");
+
+      setTimeout(() => navigate("/"), 1000);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  
   if (loading) {
     return (
       <div className="container">
@@ -108,88 +142,146 @@ function ProductDetailPage () {
       </div>
     );
   }
-      
 
-    if (error || !product){
-        return(
-            <main>
-                <section className="detalle-producto">
-                    <div className="container-detalle container">
-                        <div className="mensaje-no-econtrado">
-                        <h2>{error || "Producto no encontrado"}</h2>
-                        <Link className="button" to="/">Volver</Link>
-                        </div>
-                    </div>
-                </section> 
-            </main>
-        )
-    }
-
+ 
+  if (!product) {
     return (
-  <main>
-    <section className="detalle-producto">
-
-          {message && (<div className="mensaje-exito container"><p>{message}</p></div>)}
-
+      <main>
+        <section className="detalle-producto">
           <div className="container-detalle container">
+            <div className="mensaje-no-econtrado">
+            <h2>Producto no encontrado</h2>
+            <Link className="button" to="/">Volver</Link>
+            </div>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
-            <img src={product.imagenDetalle} alt={product.nombre} className="detalle-image" onClick={() => setImageZoom(true)}/>
+  return (
+    <main>
+      <section className="detalle-producto">
 
-              <div className="detalle-producto-content">
+        {message && (
+          <div className="mensaje-exito container">
+            <p>{message}</p>
+          </div>
+        )}
+        {!message && (
+        <div className="container-detalle container">
 
-                <h1>{product.nombre}</h1>
-                <p>{product.precio} €</p>
-                <p>{product.descripcion}</p>
-                    
-                {product.stock < 3 && product.stock !== 0 && <div className="mensaje-alerta"><p>Solo hay {product.stock} en stock!</p></div>}
-                {product.stock == 0 && <div className="mensaje-alerta"><p>Producto agotado.</p></div>}
-                    
-                <div className="botonera">
-                  {user && user.admin &&
+          <img src={product.imagenDetalle} alt={product.nombre} className="detalle-image" onClick={() => setImageZoom(true)}/>
+
+          <div className="detalle-producto-content">
+
+            <h1>{product.nombre}</h1>
+            <p>{product.precio} €</p>
+            <p>{product.descripcion}</p>
+
+            {product.stock < 3 && product.stock !== 0 && (
+              <div className="mensaje-alerta">
+                <p>Solo hay {product.stock} en stock!</p>
+              </div>
+            )}
+
+            {outOfStock && (
+              <div className="mensaje-alerta">
+                <p>Producto agotado</p>
+              </div>
+            )}
+           
+            {error && (
+              <div className="mensaje-alerta">
+                <p>{error}</p>
+              </div>
+            )}
+
+            {(outOfStock || !user) && (
+              <div className="botonera solo">
+               <Link className="button" to="/">Volver</Link>
+              </div>
+            )}
+
+            {!outOfStock && user && (
+              <>
+              <div className="selectores-producto">
+                <div className="form-group-selectores">
+                  <label>Cantidad</label>
+                  <input className="search-input" type="number" min="1" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
+                </div>
+
+            {needsSize && (
+                  <div className="form-group-selectores talla">
+                    <label>Talla</label>
+                    <select className="search-input" value={size} onChange={(e) => setSize(e.target.value)}>
+                      <option value="">Selecciona talla</option>
+                      <option value="XS">XS</option>
+                      <option value="S">S</option>
+                      <option value="M">M</option>
+                      <option value="L">L</option>
+                      <option value="XL">XL</option>
+                    </select>
+                  </div>
+                  
+                )}
+
+              </div>
+
+              {user && user.admin &&
                   <div className="botones-admin-detalle">
                     <Link className="button-crear" to={`/edit/${product._id}`}>Editar</Link>
                     <Link className="button-crear"  onClick={() => setProductToDelete(product)}>Borrar</Link>
                   </div>}
-                    <Link className="button" to="/">Volver</Link>
-                </div>
 
-              </div>
+                <div className="botonera">
+                  {user && (
+                    <button className="button" disabled={saving || (needsSize && !size)} onClick={handleCart}>
+                      {saving ? "Procesando..." : cartItemId ? "Actualizar carrito" : "Añadir al carrito"}
+                    </button>
+                  )}
+
+                  <Link className="button" to="/">Volver</Link>
+                </div>
+              </>
+            )}
 
           </div>
+        </div>
+        )}
+       
+        {imageZoom && (
+          <div className="image-overlay" onClick={() => setImageZoom(false)}>
+            <div className="image-overlay-content" onClick={(e) => e.stopPropagation()}>
+              <img src={product.imagenDetalle} alt={product.nombre}/>
+              <button className="button-modal danger image-close" onClick={() => setImageZoom(false)}> X </button>
+            </div>
+          </div>
+        )}
 
-          {productToDelete && (
-            <div className="modal-overlay" onClick={() => setProductToDelete(null)}>
-              <div className="modal" onClick={(event) => event.stopPropagation()}>
-                <h2>Eliminar producto</h2>
+        
+        {productToDelete && (
+          <div className="modal-overlay" onClick={() => setProductToDelete(null)}>
+            <div className="modal" onClick={(e) => e.stopPropagation()}>
 
-                <p>
-                  ¿Desea eliminar <strong>{productToDelete.nombre}</strong>?
-                </p>
+              <h2>Eliminar producto</h2>
+              <p>
+                ¿Eliminar <strong>{productToDelete.nombre}</strong>?
+              </p>
 
-                <div className="modal-actions">
+              <div className="modal-actions">
 
-                  <button disabled ={saving} className="button-modal secondary" type="button" onClick={() => setProductToDelete(null)}>Cancelar</button>
-                  <button disabled={saving} className="button-modal danger" type="button" onClick={() => handleDelete(productToDelete._id)}>{saving ? "Eliminando..." : "Eliminar"}</button>
+                <button className="button-modal secondary" onClick={() => setProductToDelete(null)}>Cancelar</button>
+                <button className="button-modal danger" disabled={saving} onClick={() => handleDelete(productToDelete._id)}>{saving ? "Eliminando..." : "Eliminar"}</button>
 
-                </div>
               </div>
             </div>
-          )}
-
-          {imageZoom && ( <div className="image-overlay" onClick={() => setImageZoom(false)}>
-
-          <div className="image-overlay-content" onClick={(event) => event.stopPropagation()}>
-
-            <img src={product.imagenDetalle} alt={product.nombre}/>
-            <button className="button-modal danger image-close" onClick={() => setImageZoom(false)}> X </button>
-
           </div>
-  </div>
-)}
-        </section> 
-  </main>
+        )}
 
-    );
- }
+      </section>
+    </main>
+  );
+}
 
 export default ProductDetailPage;

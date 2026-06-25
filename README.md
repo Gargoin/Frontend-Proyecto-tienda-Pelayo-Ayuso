@@ -195,7 +195,7 @@ en el Local Storage del navegador.
 Frontend desplegado en:
 
 ```txt
-https://tu-proyecto.netlify.app
+https://tu-api.onrender.com
 ```
 
 Backend desplegado en:
