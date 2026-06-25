@@ -169,11 +169,8 @@ const validateCart = () => {
     <main>
       <section className="detalle-producto">
 
-        {message && (
-          <div className="mensaje-exito container">
-            <p>{message}</p>
-          </div>
-        )}
+        {message && (<div className="mensaje-exito container"><p>{message}</p></div>)}
+
         {!message && (
         <div className="container-detalle container">
 
@@ -182,7 +179,7 @@ const validateCart = () => {
           <div className="detalle-producto-content">
 
             <h1>{product.nombre}</h1>
-            <p>{product.precio} €</p>
+            <h3>{product.precio} €</h3>
             <p>{product.descripcion}</p>
 
             {product.stock < 3 && product.stock !== 0 && (
