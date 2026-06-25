@@ -27,7 +27,7 @@ function FeaturedProducts() {
                 }
 
             } catch(error) {
-                console.log(error);
+                setError(true);
             }
         };
 

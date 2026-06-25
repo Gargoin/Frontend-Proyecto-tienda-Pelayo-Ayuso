@@ -10,7 +10,11 @@ Proyecto final del Bootcamp de Neoland Web Development.
 - Búsqueda en tiempo real.
 - Filtros y ordenamiento.
 - Vista de detalle.
-- Botones para la administración
+- Carrito de compra.
+- Añadir productos al carrito.
+- Borrar productos del carrito.
+- Cálculo del total de compra.
+- Botones para la administración.
 - Crear productos.
 - Editar productos.
 - Eliminar productos.

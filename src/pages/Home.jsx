@@ -30,7 +30,7 @@ useEffect(() => {
       setAllProducts(data);
 
     } catch(error) {
-      console.log(error);
+      setError("No se pudieron cargar los filtros de productos");
     }
   };
 

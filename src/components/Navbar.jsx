@@ -31,11 +31,7 @@ const loadCartCount = async()=>{
 
         const cart = await getCart();
 
-        console.log("CART:", cart.items);
-
         const count = cart.items.length;
-
-        console.log("COUNT:", count);
 
         setCartCount(count);
 
