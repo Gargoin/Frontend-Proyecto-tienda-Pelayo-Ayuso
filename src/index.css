@@ -170,6 +170,7 @@ main h2 {
     display:flex;
     gap:1rem;
     flex-wrap:wrap;
+    justify-content: center;
 }
 
 .botonera {
@@ -256,11 +257,19 @@ main h2 {
     align-items:center;
     flex-direction:column;
 }
+
+.pedido-total h4 {
+    text-align: center;
+}
 .texto-orden {
     display: flex;
     margin: 3rem 0;
     flex-direction: column;
     align-items: center;
+}
+
+.texto-orden  {
+    text-align: center;
 }
 
 
@@ -821,6 +830,13 @@ main h2 {
 
 @media (min-width:768px) {
 
+    .botones-admin-detalle {
+        justify-content: start;
+        display:flex;
+        gap:1rem;
+        flex-wrap:wrap;
+    }
+
     .solo {
         justify-content:flex-end;
     }
@@ -873,6 +889,10 @@ main h2 {
 
     .botonera {
         flex-wrap:wrap;
+    }
+
+    .dos {
+        justify-content: start
     }
 
     .container-destacado {

@@ -237,7 +237,7 @@ const validateCart = () => {
                     <Link className="button-crear"  onClick={() => setProductToDelete(product)}>Borrar</Link>
                   </div>}
 
-                <div className="botonera">
+                <div className="botonera dos">
                   {user && (
                     <button className="button" disabled={saving || (needsSize && !size)} onClick={handleCart}>
                       {saving ? "Procesando..." : cartItemId ? "Actualizar carrito" : "Añadir al carrito"}
