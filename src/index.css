@@ -70,6 +70,7 @@ main h2 {
 .site-footer {
     font-size:.7rem;
     border-top:2px dashed var(--primary);
+    margin-top:3rem;
     text-align:right;
 }
 
@@ -172,7 +173,7 @@ main h2 {
 }
 
 .botonera {
-    justify-content:space-between;
+    justify-content:center;
 }
 
 .selectores-producto {
@@ -183,12 +184,12 @@ main h2 {
 }
 
 .solo {
-    justify-content:flex-end;
+        justify-content:center;
 }
 
 .carrito-lista {
     display:flex;
-    margin:3rem 0;
+    margin:3rem 0 0 0;
     flex-direction:column;
 }
 
@@ -196,20 +197,21 @@ main h2 {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 3rem;
 }
 
 .carrito-info {
     display:flex;
-    gap:1rem;
+    gap:.3rem;
+    justify-content: center;
     align-items:center;
     flex-wrap:wrap;
 }
 
 .carrito-total {
     display:flex;
-    margin:3rem 0;
+    margin:0 0 0 0;
     align-items:center;
     flex-direction:column;
 }
@@ -233,7 +235,7 @@ main h2 {
     padding: 1rem;
     max-width: 60%;
     border:solid var(--border) var(--success);
-    margin: 0 auto;
+    margin: 3rem auto;
 }
 
 .orden-pedido {
@@ -796,9 +798,7 @@ main h2 {
 }
 
 @media (min-width:600px) {
-    .solo {
-        justify-content:center;
-    }
+
 
     .carrito-item {
         flex-direction:column;
@@ -810,6 +810,9 @@ main h2 {
         font-size:1rem;
         flex-wrap:wrap;
     }
+     .pedido-item {
+        justify-content: center
+     }
 }
 
 
