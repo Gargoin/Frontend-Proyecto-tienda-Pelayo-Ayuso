@@ -113,8 +113,17 @@ npm test
 
 ## vite.config.js
 
-```js
+Para los test hay que agregar la configuración de Vitest en el archivo `vite.config.js`
 
+```js
+export default defineConfig({
+ //... 
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+  }
+})
 ```
 
 ## Generar build de producción

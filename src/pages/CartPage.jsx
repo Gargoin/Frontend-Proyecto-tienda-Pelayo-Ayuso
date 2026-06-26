@@ -202,11 +202,15 @@ function CartPage() {
           </div>
 
           <div className="botonera solo">
-            <button className="button logout" disabled={updating} onClick={()=>setConfirmAction({ type:"clearCart" })} > Vaciar carrito </button>
+            <button className="button logout" disabled={updating} onClick={()=>setConfirmAction({ type:"clearCart" })}> Vaciar carrito </button>
           </div>
          
           <div className="carrito-total">
-            <h4>Total de tu compra:<strong className="total-verde"> {formatPrice(total)} €</strong></h4><button  className="button" onClick={()=>navigate("/")}>Seguir comprando</button>
+            <h4>Total de tu compra:<strong className="total-verde"> {formatPrice(total)} €</strong></h4>
+            <div className="botonera">
+              <button  className="button" onClick={()=>navigate("/")}>Seguir comprando</button>
+              <button  className="button" onClick={()=>setConfirmAction({type:"finishPurchase"})}>Finalizar compra</button>
+            </div>
           </div>
 
 
@@ -216,9 +220,9 @@ function CartPage() {
 
               <div className="modal" onClick={(e)=>e.stopPropagation()}>
 
-                <h2> {confirmAction.type === "clearCart" ? "Vaciar carrito" : "Eliminar producto"} </h2>
+                <h2> {confirmAction.type === "clearCart" ? "Vaciar carrito" : confirmAction.type === "finishPurchase" ? "Finalizar compra" : "Eliminar producto"} </h2>
 
-                <p>{confirmAction.type === "clearCart" ? "¿Seguro que quieres vaciar todo el carrito?" : <>¿Eliminar <strong> {" "} {confirmAction.item.producto.nombre} {" "} </strong> del carrito?</>}</p>
+                <p>{confirmAction.type === "clearCart" ? "¿Seguro que quieres vaciar todo el carrito?" : confirmAction.type === "finishPurchase" ? "¿Quieres finalizar tu compra?" : <>¿Eliminar <strong> {" "} {confirmAction.item.producto.nombre} {" "} </strong> del carrito?</>}</p>
 
                 <div className="modal-actions">
 
@@ -228,6 +232,8 @@ function CartPage() {
 
                       if(confirmAction.type==="clearCart"){
                         await handleClearCart();
+                      } else if(confirmAction.type==="finishPurchase"){
+                        navigate("/orden");
                       } else {
                         await handleDeleteItem(confirmAction.item._id);
                       }

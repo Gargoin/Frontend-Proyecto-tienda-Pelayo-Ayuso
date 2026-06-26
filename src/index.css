@@ -224,6 +224,42 @@ main h2 {
     color:var(--success);
     margin-left:1rem;
 }
+.orden {
+    margin-bottom: 3rem;
+}
+
+.orden-borde{
+    display: block;
+    padding: 1rem;
+    max-width: 60%;
+    border:solid var(--border) var(--success);
+    margin: 0 auto;
+}
+
+.orden-pedido {
+    display:flex;
+    margin: .5rem 0;
+    flex-direction:column;
+}
+
+.pedido-item {
+    display: flex;
+    flex-direction: column;
+    margin: .3rem 0;
+    align-items: center;
+}
+
+.pedido-total {
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+}
+.texto-orden {
+    display: flex;
+    margin: 3rem 0;
+    flex-direction: column;
+    align-items: center;
+}
 
 
 
