@@ -96,7 +96,7 @@ function ProductFormPage({}) {
     }
 
       if (form.descripcion.trim().length < 30) {
-      return "La descripción debe tner al menos 30 caracteres.";
+      return "La descripción debe tener al menos 30 caracteres.";
     }
 
     if (!form.categoria) {
